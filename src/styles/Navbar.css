@@ -1,4 +1,456 @@
-h1{
-    font-size: 50px;
-    font-weight: bold;
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+  width: 100%;
+
+  background: linear-gradient(
+    90deg,
+    #090910,
+    #15121d,
+    #090910
+  );
+
+  border-bottom: 1px solid #292530;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+
+/* =========================================
+   NAVBAR CONTAINER
+========================================= */
+
+.navbar-container {
+  max-width: 1300px;
+
+  height: 70px;
+
+  margin: auto;
+  padding: 0 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 270px;
+
+  color: white;
+  text-decoration: none;
+
+  font-size: 19px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.logo img {
+  width: 140px;
+  height: auto;
+
+  object-fit: cover;
+
+
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   NAVIGATION MENU
+========================================= */
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+
+  gap: 27px;
+
+  margin-left: 10px;
+}
+
+
+/* =========================================
+   NAV LINKS
+========================================= */
+
+.nav-link {
+  position: relative;
+
+  padding: 8px 0;
+
+  color: #aaa6b4;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  white-space: nowrap;
+
+  transition: color 0.25s ease;
+}
+
+
+/* Hover */
+
+.nav-link:hover {
+  color: white;
+}
+
+
+/* Orange underline */
+
+.nav-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 1px;
+
+  width: 0;
+  height: 2px;
+
+  background: #f59e0b;
+
+  transition: width 0.25s ease;
+}
+
+
+/* Hover + Active */
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+
+/* Active link */
+
+.nav-link.active {
+  color: white;
+}
+
+
+/* =========================================
+   RIGHT SIDE
+========================================= */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-left: 25px;
+}
+
+
+/* =========================================
+   CART
+========================================= */
+
+.cart {
+  color: #aaa6b4;
+
+  text-decoration: none;
+
+  font-size: 18px;
+
+  transition: 0.25s ease;
+}
+
+.cart:hover,
+.cart.active {
+  color: #f59e0b;
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+.login {
+  color: #f59e0b;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  padding: 7px 17px;
+
+  border: 1px solid #f59e0b;
+
+  border-radius: 20px;
+
+  transition: 0.25s ease;
+}
+
+.login:hover {
+  color: #111;
+
+  background: #f59e0b;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   MOBILE MENU BUTTON
+========================================= */
+
+.menu-btn {
+  display: none;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 6px;
+
+  margin-left: auto;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+}
+
+
+/* Hamburger lines */
+
+.menu-btn span {
+  display: block;
+
+  width: 22px;
+  height: 2px;
+
+  margin: 5px auto;
+
+  background: #aaa6b4;
+
+  transition: 0.25s ease;
+}
+
+
+/* =========================================
+   HAMBURGER → X
+========================================= */
+
+.menu-btn.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .logo {
+    min-width: 220px;
+  }
+
+  .nav-menu {
+    gap: 18px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+  /* Main container */
+
+  .navbar-container {
+    height: 64px;
+
+    padding: 0 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+  }
+
+
+  /* Logo */
+
+  .logo {
+    min-width: 200px;
+
+  }
+
+
+  .logo img {
+    width: 100px;
+    height: auto;
+  }
+
+
+  /* Hamburger */
+
+  .menu-btn {
+    display: block;
+
+    margin-left: 0;
+
+    flex-shrink: 0;
+  }
+
+
+  /* =====================================
+     MOBILE NAVIGATION
+  ===================================== */
+
+  .nav-menu {
+
+    position: absolute;
+
+    top: 64px;
+    left: 0;
+
+    width: 100%;
+
+    display: none;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 0;
+
+    margin: 0;
+
+    padding: 12px 25px 20px;
+
+    background: #0c0b12;
+
+    border-bottom: 1px solid #292530;
+
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+  }
+
+
+  /* Open menu */
+
+  .nav-menu.show {
+
+    display: flex;
+
+    animation: menuSlide 0.25s ease;
+  }
+
+
+  /* Menu animation */
+
+  @keyframes menuSlide {
+
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  }
+
+
+  /* =====================================
+     MOBILE LINKS
+  ===================================== */
+
+  .nav-link {
+
+    padding: 12px 0;
+
+    font-size: 15px;
+  }
+
+
+  /* =====================================
+     MOBILE RIGHT SIDE
+  ===================================== */
+
+  .nav-actions {
+
+    width: 100%;
+
+    margin: 8px 0 0;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #292530;
+
+    display: flex;
+
+    justify-content: flex-start;
+  }
+
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 480px) {
+
+  .navbar-container {
+
+    padding: 0 15px;
+  }
+
+
+  .logo {
+
+    font-size: 16px;
+  }
+
+
+  .logo img {
+
+    width: 100px;
+    height: auto;
+  }
+
+
+  .menu-btn {
+
+    width: 36px;
+    height: 36px;
+  }
+
 }

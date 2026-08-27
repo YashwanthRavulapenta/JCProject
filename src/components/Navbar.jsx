@@ -1,25 +1,134 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import "../styles/Navbar.css"
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import "../styles/Navbar.css";
+import logoImage from '../assets/logo.png'
 
-const Navbar = () => {
+
+function Navbar() {
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Close mobile menu
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
-    <div className='text-center text-white d-flex justify-content-evenly'>
+    <nav className="navbar">
+
+      <div className="navbar-container">
+
+        {/* Logo */}
         <div>
-            <h1 className='text-dark'>JC</h1>
+            <NavLink to="/" className="logo" onClick={closeMenu}>
+            <img src={logoImage} alt="Logo"/>
+            </NavLink>
         </div>
-        <div className='d-flex gap-3 justify-content-evenly align-items-center text-white'>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/login">
-                <button className='btn btn-primary'>Login</button>
-            </Link>
-            <Link to="/signup">
-                <button className='btn btn-success'>Signup</button>
-            </Link>
+
+
+        {/* Navigation Links */}
+
+        <div className={`nav-menu ${menuOpen ? "show" : ""}`}>
+
+          <NavLink
+            to="/sarees"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+            onClick={closeMenu}
+          >
+            Sarees
+          </NavLink>
+
+
+          <NavLink
+            to="/jewellery"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+            onClick={closeMenu}
+          >
+            Jewellery
+          </NavLink>
+
+
+          <NavLink
+            to="/beauty-services"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+            onClick={closeMenu}
+          >
+            Beauty Services
+          </NavLink>
+
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+            onClick={closeMenu}
+          >
+            About
+          </NavLink>
+
+
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+            onClick={closeMenu}
+          >
+            Contact
+          </NavLink>
+
+
+          {/* Right Side */}
+
+          <div className="nav-actions">
+
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                isActive ? "cart active" : "cart"
+              }
+              onClick={closeMenu}
+            >
+              🛒
+            </NavLink>
+
+
+            <NavLink
+              to="/login"
+              className="login"
+              onClick={closeMenu}
+            >
+              Login
+            </NavLink>
+
+          </div>
+
         </div>
-    </div>
-  )
+
+
+        {/* Mobile Button */}
+
+        <button
+          className={`menu-btn ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;

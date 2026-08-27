@@ -3,13 +3,14 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 // import Layout from './Layout'
 import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Home from './pages/Home'
 import About from './pages/About'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import ErrorPage from './pages/ErrorPage'
 import Layout from './Layout'
+import UserInfo from './pages/UserInfo'
 
 const myRoutes = createBrowserRouter([
   {
@@ -17,11 +18,7 @@ const myRoutes = createBrowserRouter([
     element : <Layout/>,
     errorElement : <ErrorPage/>,
     children:[
-      {
-        path:'/',
-        element : <Home/>,
-        errorElement : <ErrorPage/>
-      },
+      
       {
         path:'/about',
         element:<About/>
@@ -33,6 +30,14 @@ const myRoutes = createBrowserRouter([
       {
         path:'/signup',
         element:<Signup/>
+      },
+      {
+        path:'users/:id',
+        element : <UserInfo/>
+      },
+      {
+        path:'*',
+        element:<ErrorPage/>
       }
     ]
   }
