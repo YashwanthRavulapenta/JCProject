@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/Navbar.css";
 import logoImage from '../assets/logo.png'
+import Footer from "./Footer";
 
 
 function Navbar() {
@@ -29,6 +30,16 @@ function Navbar() {
         {/* Navigation Links */}
 
         <div className={`nav-menu ${menuOpen ? "show" : ""}`}>
+
+          <NavLink
+            to="/home"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+            onClick={closeMenu}
+          >
+            Home
+          </NavLink>
 
           <NavLink
             to="/sarees"
@@ -100,13 +111,13 @@ function Navbar() {
             </NavLink>
 
 
-            <NavLink
+            {/* <NavLink
               to="/login"
               className="login"
               onClick={closeMenu}
             >
               Login
-            </NavLink>
+            </NavLink> */}
 
           </div>
 

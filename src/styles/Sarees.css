@@ -1,0 +1,731 @@
+/* =========================================
+   MAIN PAGE
+========================================= */
+
+.sarees-page {
+
+    min-height: 100vh;
+
+    padding: 45px 6% 80px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111111 0%,
+            #1c1914 50%,
+            #111111 100%
+        );
+
+    color: #f5f1e8;
+
+}
+
+
+/* =========================================
+   J COLLECTIONS
+========================================= */
+
+.sarees-brand {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 45px;
+
+    animation: fadeDown 0.8s ease;
+
+}
+
+
+.sarees-brand h1 {
+
+    margin: 0;
+
+    color: #d9b24c;
+
+    font-size: clamp(18px, 2vw, 26px);
+
+    font-weight: 500;
+
+    letter-spacing: 8px;
+
+    white-space: nowrap;
+
+}
+
+
+.brand-line {
+
+    width: 70px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #d9b24c
+        );
+
+}
+
+
+.brand-line:last-child {
+
+    background:
+        linear-gradient(
+            90deg,
+            #d9b24c,
+            transparent
+        );
+
+}
+
+
+/* =========================================
+   CATEGORY SECTION
+========================================= */
+
+.category-section {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+    margin-bottom: 50px;
+
+    animation: fadeUp 0.8s ease;
+
+}
+
+
+/* CATEGORY BUTTON */
+
+.category-btn {
+
+    min-width: 140px;
+
+    padding: 12px 24px;
+
+    border-radius: 30px;
+
+    border: 1px solid #45413b;
+
+    background: transparent;
+
+    color: #d0cbc2;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        all 0.3s ease;
+
+}
+
+
+/* HOVER */
+
+.category-btn:hover {
+
+    transform: translateY(-3px);
+
+    border-color: #d9b24c;
+
+    color: #e3bd5a;
+
+    box-shadow:
+        0 8px 25px
+        rgba(217, 178, 76, 0.12);
+
+}
+
+
+/* ACTIVE */
+
+.category-btn.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #d9b24c,
+            #b88a25
+        );
+
+    border-color: #d9b24c;
+
+    color: #15120d;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 8px 30px
+        rgba(217, 178, 76, 0.25);
+
+}
+
+
+/* =========================================
+   PRODUCT GRID
+   EXACTLY 5 COLUMNS DESKTOP
+========================================= */
+
+.sarees-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 20px;
+
+}
+
+
+/* =========================================
+   PRODUCT CARD
+========================================= */
+
+.saree-card {
+
+    overflow: hidden;
+
+    background: #181818;
+
+    border: 1px solid #2c2a27;
+
+    border-radius: 14px;
+
+    animation: cardAppear 0.6s ease both;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+
+}
+
+
+.saree-card:hover {
+
+    transform: translateY(-7px);
+
+    border-color: #80652d;
+
+    box-shadow:
+        0 18px 45px
+        rgba(0, 0, 0, 0.45);
+
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.saree-image-box {
+
+    width: 100%;
+
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+
+    background: #222;
+
+}
+
+
+.saree-image-box img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform 0.6s ease;
+
+}
+
+
+.saree-card:hover img {
+
+    transform: scale(1.06);
+
+}
+
+
+/* =========================================
+   DETAILS
+========================================= */
+
+.saree-details {
+
+    padding: 15px;
+
+}
+
+
+.saree-details h3 {
+
+    margin: 0 0 7px;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    color: #f2eee6;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.saree-details p {
+
+    margin: 0;
+
+    color: #918b82;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================
+   BOTTOM
+========================================= */
+
+.saree-bottom {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+}
+
+
+.saree-bottom span {
+
+    color: #dfb84f;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+}
+
+
+.saree-bottom button {
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    border: 1px solid #d9b24c;
+
+    background: transparent;
+
+    color: #dfb84f;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    transition: 0.3s;
+
+}
+
+
+.saree-bottom button:hover {
+
+    background: #d9b24c;
+
+    color: #17130d;
+
+}
+
+
+/* =========================================
+   SHIMMER
+========================================= */
+
+.skeleton-card {
+
+    pointer-events: none;
+
+}
+
+
+.skeleton {
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #242424;
+
+}
+
+
+.skeleton::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    transform: translateX(-100%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.08),
+            transparent
+        );
+
+    animation: shimmer 1.4s infinite;
+
+}
+
+
+.skeleton-image {
+
+    width: 100%;
+
+    aspect-ratio: 3 / 4;
+
+}
+
+
+.skeleton-content {
+
+    padding: 15px;
+
+}
+
+
+.skeleton-title {
+
+    width: 75%;
+
+    height: 16px;
+
+    border-radius: 8px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.skeleton-text {
+
+    width: 45%;
+
+    height: 12px;
+
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.skeleton-price {
+
+    width: 35%;
+
+    height: 15px;
+
+    border-radius: 8px;
+
+}
+
+
+/* =========================================
+   NO PRODUCTS
+========================================= */
+
+.no-products {
+
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 80px 20px;
+
+    color: #999;
+
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes shimmer {
+
+    100% {
+
+        transform: translateX(100%);
+
+    }
+
+}
+
+
+@keyframes fadeDown {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(-20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+@keyframes cardAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(25px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+/* =========================================
+   LARGE TABLET
+   4 COLUMNS
+========================================= */
+
+@media (max-width: 1200px) {
+
+    .sarees-grid {
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================
+   TABLET
+   3 COLUMNS
+========================================= */
+
+@media (max-width: 900px) {
+
+    .sarees-page {
+
+        padding: 40px 5% 70px;
+
+    }
+
+
+    .sarees-grid {
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+    }
+
+
+    .category-btn {
+
+        min-width: 120px;
+
+    }
+
+}
+
+
+/* =========================================
+   MOBILE / SMALL TABLET
+   2 COLUMNS
+========================================= */
+
+@media (max-width: 650px) {
+
+    .sarees-page {
+
+        padding: 35px 16px 60px;
+
+    }
+
+
+    .sarees-brand {
+
+        gap: 10px;
+
+        margin-bottom: 35px;
+
+    }
+
+
+    .sarees-brand h1 {
+
+        font-size: 15px;
+
+        letter-spacing: 4px;
+
+    }
+
+
+    .brand-line {
+
+        width: 30px;
+
+    }
+
+
+    .category-section {
+
+        gap: 9px;
+
+        margin-bottom: 35px;
+
+    }
+
+
+    .category-btn {
+
+        min-width: auto;
+
+        padding: 10px 18px;
+
+        font-size: 13px;
+
+    }
+
+
+    .sarees-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+
+    }
+
+
+    .saree-details {
+
+        padding: 12px;
+
+    }
+
+
+    .saree-details h3 {
+
+        font-size: 14px;
+
+    }
+
+
+    .saree-bottom {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 380px) {
+
+    .category-btn {
+
+        padding: 9px 13px;
+
+        font-size: 12px;
+
+    }
+
+
+    .sarees-grid {
+
+        gap: 10px;
+
+    }
+
+}

@@ -1,5 +1,503 @@
-.home_div{
-    background-color: rgb(210, 211, 211);
-    padding-top: 40px;
-    padding-bottom: 40px;
+/* =========================================
+   HOME PAGE
+========================================= */
+
+.home {
+  position: relative;
+
+  /*
+    PERFECT SCREEN HEIGHT:
+    Full visible screen
+    minus navbar height
+  */
+  min-height: calc(100dvh - var(--navbar-height));
+
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  color: white;
+
+  /*
+    LUXURY BACKGROUND
+    Matches Navbar Theme
+  */
+  background:
+
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(212, 166, 58, 0.14),
+      transparent 28%
+    ),
+
+    radial-gradient(
+      circle at 85% 70%,
+      rgba(212, 166, 58, 0.08),
+      transparent 25%
+    ),
+
+    linear-gradient(
+      135deg,
+      #090910 0%,
+      #15121d 50%,
+      #090910 100%
+    );
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.home-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  max-width: 950px;
+
+  padding: 40px 25px;
+
+  text-align: center;
+
+  animation: contentAppear 1s ease forwards;
+}
+
+
+/* =========================================
+   SMALL HEADING
+========================================= */
+
+.home-subtitle {
+  color: #d4a63a;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: 6px;
+
+  margin-bottom: 18px;
+
+  animation: fadeDown 0.8s ease;
+}
+
+
+/* =========================================
+   MAIN HEADING
+========================================= */
+
+.home-title {
+  font-size: clamp(42px, 6vw, 78px);
+
+  line-height: 1.1;
+
+  font-weight: 700;
+
+  margin-bottom: 25px;
+
+  color: #ffffff;
+
+  animation: fadeUp 1s ease;
+}
+
+
+.home-title span {
+  display: block;
+
+  background: linear-gradient(
+    90deg,
+    #c9932e,
+    #f6d365,
+    #ffffff,
+    #d4a63a
+  );
+
+  background-size: 300%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  animation: goldShine 6s linear infinite;
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.home-description {
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  color: #c5c5cd;
+
+  font-size: clamp(16px, 2vw, 20px);
+
+  line-height: 1.7;
+
+  animation: fadeUp 1.2s ease;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.home-buttons {
+  margin-top: 38px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 18px;
+
+  flex-wrap: wrap;
+
+  animation: fadeUp 1.4s ease;
+}
+
+
+.primary-btn,
+.secondary-btn {
+  min-width: 190px;
+
+  padding: 15px 30px;
+
+  border-radius: 30px;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+
+/* =========================================
+   PRIMARY BUTTON
+========================================= */
+
+.primary-btn {
+  border: none;
+
+  color: #15121d;
+
+  background: linear-gradient(
+    135deg,
+    #c9932e,
+    #f6d365
+  );
+
+  box-shadow:
+    0 10px 30px rgba(212, 166, 58, 0.25);
+}
+
+
+.primary-btn:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 15px 40px rgba(212, 166, 58, 0.45);
+}
+
+
+/* =========================================
+   SECONDARY BUTTON
+========================================= */
+
+.secondary-btn {
+  color: #f6d365;
+
+  border: 1px solid #b88a2d;
+
+  background: rgba(255, 255, 255, 0.02);
+}
+
+
+.secondary-btn:hover {
+  background: #b88a2d;
+
+  color: #111;
+
+  transform: translateY(-4px);
+}
+
+
+/* =========================================
+   BACKGROUND GLOWS
+========================================= */
+
+.home-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(120px);
+
+  opacity: 0.18;
+
+  animation: glowMove 10s ease-in-out infinite alternate;
+}
+
+
+.glow-one {
+  width: 450px;
+  height: 450px;
+
+  background: #c9932e;
+
+  top: -200px;
+  left: -180px;
+}
+
+
+.glow-two {
+  width: 400px;
+  height: 400px;
+
+  background: #d4a63a;
+
+  bottom: -200px;
+  right: -150px;
+
+  animation-delay: 2s;
+}
+
+
+/* =========================================
+   FLOATING PARTICLES
+========================================= */
+
+.home-particle {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #d4a63a;
+
+  box-shadow:
+    0 0 15px rgba(212, 166, 58, 0.8);
+
+  animation: floatParticle 6s ease-in-out infinite;
+}
+
+
+.particle-one {
+  top: 25%;
+  left: 15%;
+}
+
+
+.particle-two {
+  top: 70%;
+  right: 18%;
+
+  animation-delay: 2s;
+}
+
+
+.particle-three {
+  top: 35%;
+  right: 10%;
+
+  animation-delay: 4s;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes contentAppear {
+
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+
+@keyframes fadeDown {
+
+  from {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+@keyframes fadeUp {
+
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+@keyframes goldShine {
+
+  0% {
+    background-position: 0%;
+  }
+
+  100% {
+    background-position: 300%;
+  }
+
+}
+
+
+@keyframes glowMove {
+
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(70px, 50px);
+  }
+
+}
+
+
+@keyframes floatParticle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateY(-30px);
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+
+  .home-content {
+    padding: 35px 25px;
+  }
+
+
+  .home-subtitle {
+    letter-spacing: 4px;
+  }
+
+
+  .home-glow {
+    opacity: 0.13;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .home-content {
+    padding: 30px 18px;
+  }
+
+
+  .home-subtitle {
+    font-size: 11px;
+
+    letter-spacing: 2px;
+  }
+
+
+  .home-title {
+    font-size: clamp(38px, 12vw, 52px);
+  }
+
+
+  .home-description {
+    font-size: 15px;
+
+    line-height: 1.7;
+  }
+
+
+  .home-buttons {
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 30px;
+  }
+
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+
+    max-width: 290px;
+  }
+
+
+  .glow-one {
+    width: 280px;
+    height: 280px;
+  }
+
+
+  .glow-two {
+    width: 250px;
+    height: 250px;
+  }
+
+
+  .home-particle {
+    width: 5px;
+    height: 5px;
+  }
+
 }

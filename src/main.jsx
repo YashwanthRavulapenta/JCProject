@@ -10,7 +10,11 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import ErrorPage from './pages/ErrorPage'
 import Layout from './Layout'
-import UserInfo from './pages/UserInfo'
+import Sarees from './pages/Sarees';
+import Jewellery from './pages/Jewellery';
+import Beauty from './pages/Beauty';
+import Cart from './pages/Cart';
+import Home from './pages/Home';
 
 const myRoutes = createBrowserRouter([
   {
@@ -18,26 +22,34 @@ const myRoutes = createBrowserRouter([
     element : <Layout/>,
     errorElement : <ErrorPage/>,
     children:[
-      
+      {
+        path:'/',
+        element:<Home/>
+      }
+      ,
+      {
+        path:'/home',
+        element:<Home/>
+      },
       {
         path:'/about',
-        element:<About/>
+        element : <About/>
       },
       {
-        path:'/login',
-        element:<Login/>
+        path:'/sarees',
+        element:<Sarees/>
       },
       {
-        path:'/signup',
-        element:<Signup/>
+        path:'/jewellery',
+        element:<Jewellery/>
       },
       {
-        path:'users/:id',
-        element : <UserInfo/>
+        path:'/beauty-services',
+        element:<Beauty/>
       },
       {
-        path:'*',
-        element:<ErrorPage/>
+        path:'/cart',
+        element:<Cart/>
       }
     ]
   }
