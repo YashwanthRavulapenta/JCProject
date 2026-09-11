@@ -15,6 +15,10 @@ import Cart from './pages/Cart';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Checkout from './pages/Checkout';
+import OrderSuccess from './pages/OrderSuccess';
+import Orders from './pages/Orders';
+import OrderDetails from './pages/OrderDetails';
 
 const myRoutes = createBrowserRouter([
   {
@@ -58,6 +62,22 @@ const myRoutes = createBrowserRouter([
       {
         path:'/cart',
         element:<Cart/>
+      },
+      {
+        path:'/checkout',
+        element:<Checkout/>
+      },
+      {
+        path:'/order-success/:id',
+        element:<OrderSuccess/>
+      },
+      {
+        path:'/orders',
+        element:<Orders/>
+      },
+      {
+        path:'/orders/:id',
+        element:<OrderDetails/>
       }
     ]
   }

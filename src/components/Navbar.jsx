@@ -342,6 +342,18 @@ const Navbar = () => {
             Contact
           </NavLink>
 
+          <NavLink
+            to="/orders"
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link active"
+                : "nav-link"
+            }
+          >
+            Orders
+          </NavLink>
+
 
           {/* ===================================
               MOBILE AUTH

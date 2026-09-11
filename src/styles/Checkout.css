@@ -1,0 +1,968 @@
+/* =========================================================
+   J COLLECTIONS
+   CHECKOUT PAGE
+   DARK + GOLD LUXURY THEME
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT VARIABLES
+   ========================================================= */
+
+:root {
+    --checkout-bg: #0d0c0b;
+    --checkout-bg-soft: #12110f;
+    --checkout-card: #151412;
+    --checkout-card-hover: #191815;
+
+    --checkout-gold: #d4af37;
+    --checkout-gold-light: #f0cf68;
+    --checkout-gold-dark: #9f7b20;
+
+    --checkout-text: #f4f0e7;
+    --checkout-text-soft: #c9c3b7;
+    --checkout-text-muted: #8e887d;
+
+    --checkout-border: rgba(212, 175, 55, 0.22);
+    --checkout-border-soft: rgba(255, 255, 255, 0.08);
+
+    --checkout-danger: #ff6b6b;
+    --checkout-success: #63c98a;
+
+    --checkout-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.45);
+
+    --checkout-radius: 16px;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.checkout-page {
+    min-height: calc(100vh - 110px);
+
+    padding: 55px 24px 80px;
+
+    color: var(--checkout-text);
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(212, 175, 55, 0.075),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 0% 100%,
+            rgba(212, 175, 55, 0.035),
+            transparent 28%
+        ),
+        var(--checkout-bg);
+
+    position: relative;
+
+    overflow: hidden;
+
+    animation: checkoutPageIn 0.55s ease both;
+}
+
+
+/* subtle background glow */
+
+.checkout-page::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    top: -250px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: rgba(212, 175, 55, 0.06);
+
+    filter: blur(100px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.checkout-container {
+    width: 100%;
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+.checkout-container > h1 {
+    position: relative;
+
+    margin: 0 0 42px;
+
+    text-align: center;
+
+    font-size: clamp(30px, 4vw, 46px);
+
+    font-weight: 500;
+
+    letter-spacing: 7px;
+
+    text-transform: uppercase;
+
+    color: var(--checkout-gold-light);
+
+    text-shadow:
+        0 0 20px rgba(212, 175, 55, 0.12);
+
+    animation: titleReveal 0.7s ease both;
+}
+
+
+/* gold decorative line */
+
+.checkout-container > h1::before,
+.checkout-container > h1::after {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+
+    width: clamp(35px, 12vw, 130px);
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            var(--checkout-gold)
+        );
+
+    opacity: 0.7;
+}
+
+.checkout-container > h1::before {
+    right: calc(50% + 150px);
+
+    transform: translateY(-50%);
+}
+
+.checkout-container > h1::after {
+    left: calc(50% + 150px);
+
+    transform:
+        translateY(-50%)
+        rotate(180deg);
+}
+
+
+/* =========================================================
+   CHECKOUT SECTION
+   ========================================================= */
+
+.checkout-section {
+    width: 100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.025),
+            rgba(255, 255, 255, 0.008)
+        ),
+        var(--checkout-card);
+
+    border: 1px solid var(--checkout-border);
+
+    border-radius: var(--checkout-radius);
+
+    padding: clamp(22px, 4vw, 38px);
+
+    box-shadow: var(--checkout-shadow);
+
+    position: relative;
+
+    overflow: hidden;
+
+    animation: sectionReveal 0.65s ease both;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+/* golden top line */
+
+.checkout-section::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--checkout-gold),
+            var(--checkout-gold-light),
+            var(--checkout-gold),
+            transparent
+        );
+
+    opacity: 0.85;
+}
+
+
+/* soft glow inside card */
+
+.checkout-section::after {
+    content: "";
+
+    position: absolute;
+
+    width: 200px;
+    height: 200px;
+
+    right: -120px;
+    top: -120px;
+
+    background: rgba(212, 175, 55, 0.045);
+
+    filter: blur(45px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.checkout-section h2 {
+    margin: 0 0 28px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    font-size: clamp(20px, 2.5vw, 25px);
+
+    font-weight: 500;
+
+    color: var(--checkout-text);
+
+    letter-spacing: 0.3px;
+}
+
+
+/* gold vertical indicator */
+
+.checkout-section h2::before {
+    content: "";
+
+    width: 4px;
+    height: 25px;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--checkout-gold-light),
+            var(--checkout-gold-dark)
+        );
+
+    box-shadow:
+        0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.checkout-form {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.checkout-form input,
+.checkout-form textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--checkout-border-soft);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color: var(--checkout-text);
+
+    padding: 15px 16px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+}
+
+
+/* placeholders */
+
+.checkout-form input::placeholder,
+.checkout-form textarea::placeholder {
+    color: #777168;
+
+    opacity: 1;
+
+    transition:
+        color 0.25s ease;
+}
+
+
+/* hover */
+
+.checkout-form input:hover,
+.checkout-form textarea:hover {
+    border-color: rgba(212, 175, 55, 0.35);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+}
+
+
+/* focus */
+
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+    border-color: var(--checkout-gold);
+
+    background:
+        rgba(212, 175, 55, 0.025);
+
+    box-shadow:
+        0 0 0 3px rgba(212, 175, 55, 0.08),
+        0 8px 25px rgba(0, 0, 0, 0.18);
+
+    transform: translateY(-1px);
+}
+
+
+.checkout-form input:focus::placeholder,
+.checkout-form textarea:focus::placeholder {
+    color: #9a927f;
+}
+
+
+/* =========================================================
+   FULL WIDTH ADDRESS
+   ========================================================= */
+
+/*
+   Your JSX has the textarea between inputs.
+   Make the Complete Address field span both columns.
+*/
+
+.checkout-form textarea {
+    grid-column: 1 / -1;
+
+    min-height: 125px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   PHONE + PINCODE
+   ========================================================= */
+
+.checkout-form input[name="phone"],
+.checkout-form input[name="pincode"] {
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.checkout-error {
+    margin-top: 18px;
+
+    padding: 14px 17px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 90, 90, 0.25);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 70, 70, 0.09),
+            rgba(255, 70, 70, 0.025)
+        );
+
+    color: #ff9a9a;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    animation:
+        errorSlideIn 0.35s ease both;
+}
+
+
+/* error icon */
+
+.checkout-error::before {
+    content: "!";
+
+    width: 21px;
+    height: 21px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 110, 110, 0.5);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PAY NOW BUTTON
+   ========================================================= */
+
+.pay-now-button {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 16px 25px;
+
+    border: 1px solid var(--checkout-gold);
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d8b13d,
+            #b88b20
+        );
+
+    color: #111;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 25px rgba(212, 175, 55, 0.17);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+
+/* shine animation */
+
+.pay-now-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.6s ease;
+}
+
+
+.pay-now-button:hover::before {
+    left: 140%;
+}
+
+
+.pay-now-button:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 12px 35px rgba(212, 175, 55, 0.27);
+}
+
+
+.pay-now-button:active {
+    transform: translateY(0);
+
+    box-shadow:
+        0 5px 15px rgba(212, 175, 55, 0.16);
+}
+
+
+/* =========================================================
+   LOADING / DISABLED BUTTON
+   ========================================================= */
+
+.pay-now-button:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.75;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9d833d,
+            #796222
+        );
+
+    box-shadow: none;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.checkout-form input:focus-visible,
+.checkout-form textarea:focus-visible,
+.pay-now-button:focus-visible {
+    outline: 2px solid rgba(240, 207, 104, 0.55);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   AUTOFILL
+   ========================================================= */
+
+.checkout-form input:-webkit-autofill,
+.checkout-form input:-webkit-autofill:hover,
+.checkout-form input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--checkout-text);
+
+    -webkit-box-shadow:
+        0 0 0 1000px #171613 inset;
+
+    box-shadow:
+        0 0 0 1000px #171613 inset;
+
+    border-color: var(--checkout-border);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .checkout-page {
+        padding: 40px 18px 60px;
+    }
+
+    .checkout-container > h1 {
+        margin-bottom: 32px;
+
+        letter-spacing: 5px;
+    }
+
+    .checkout-container > h1::before {
+        right: calc(50% + 125px);
+    }
+
+    .checkout-container > h1::after {
+        left: calc(50% + 125px);
+    }
+
+    .checkout-section {
+        padding: 27px;
+    }
+
+    .checkout-form {
+        gap: 16px;
+    }
+
+    .checkout-form input,
+    .checkout-form textarea {
+        padding: 14px;
+    }
+
+    .pay-now-button {
+        padding: 15px 20px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .checkout-page {
+        min-height: calc(100vh - 80px);
+
+        padding: 30px 14px 50px;
+    }
+
+
+    .checkout-container > h1 {
+        font-size: 27px;
+
+        letter-spacing: 4px;
+
+        margin-bottom: 28px;
+    }
+
+
+    /* remove decorative lines on small screens */
+
+    .checkout-container > h1::before,
+    .checkout-container > h1::after {
+        width: 28px;
+    }
+
+    .checkout-container > h1::before {
+        right: calc(50% + 110px);
+    }
+
+    .checkout-container > h1::after {
+        left: calc(50% + 110px);
+    }
+
+
+    .checkout-section {
+        padding: 21px 17px;
+
+        border-radius: 13px;
+    }
+
+
+    .checkout-section h2 {
+        font-size: 19px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .checkout-section h2::before {
+        height: 22px;
+
+        width: 3px;
+    }
+
+
+    /* one column */
+
+    .checkout-form {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+
+    .checkout-form textarea {
+        grid-column: auto;
+
+        min-height: 110px;
+    }
+
+
+    .checkout-form input,
+    .checkout-form textarea {
+        font-size: 14px;
+
+        padding: 13px 14px;
+
+        border-radius: 9px;
+    }
+
+
+    .checkout-error {
+        font-size: 12px;
+
+        padding: 12px 13px;
+    }
+
+
+    .pay-now-button {
+        margin-top: 20px;
+
+        padding: 14px 18px;
+
+        font-size: 14px;
+
+        letter-spacing: 0.9px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .checkout-page {
+        padding: 24px 10px 40px;
+    }
+
+
+    .checkout-container > h1 {
+        font-size: 23px;
+
+        letter-spacing: 3px;
+    }
+
+
+    .checkout-container > h1::before,
+    .checkout-container > h1::after {
+        display: none;
+    }
+
+
+    .checkout-section {
+        padding: 18px 14px;
+    }
+
+
+    .checkout-section h2 {
+        font-size: 17px;
+    }
+
+
+    .checkout-form {
+        gap: 13px;
+    }
+
+
+    .checkout-form input,
+    .checkout-form textarea {
+        font-size: 13px;
+
+        padding: 12px;
+    }
+
+
+    .pay-now-button {
+        font-size: 13px;
+
+        padding: 13px 15px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 320px) {
+
+    .checkout-page {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+
+    .checkout-section {
+        padding: 16px 12px;
+    }
+
+
+    .checkout-container > h1 {
+        font-size: 21px;
+
+        letter-spacing: 2px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .checkout-page,
+    .checkout-section,
+    .checkout-container > h1,
+    .checkout-error {
+        animation: none;
+    }
+
+    .checkout-form input,
+    .checkout-form textarea,
+    .pay-now-button {
+        transition: none;
+    }
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes checkoutPageIn {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes titleReveal {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(15px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+@keyframes sectionReveal {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes errorSlideIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-7px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}

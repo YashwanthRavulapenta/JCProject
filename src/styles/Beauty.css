@@ -1,63 +1,263 @@
 /* =========================================
-   BEAUTY PAGE
+   JCOLLECTIONS BEAUTY PAGE
 ========================================= */
 
 .beauty-page {
+  position: relative;
+
+  width: 100%;
   min-height: 100vh;
 
-  padding: 40px 25px 60px;
+  padding:
+    45px
+    5%
+    80px;
 
-  box-sizing: border-box;
+  overflow-x: hidden;
+
+  color: #f5f1e8;
 
   background:
-    radial-gradient(
-      circle at 15% 10%,
-      rgba(245, 158, 11, 0.07),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 85% 90%,
-      rgba(217, 178, 76, 0.05),
-      transparent 30%
-    ),
-    #0b0a10;
 
-  color: #ffffff;
+    radial-gradient(
+      circle at 12% 15%,
+      rgba(
+        217,
+        178,
+        76,
+        0.07
+      ),
+      transparent 27%
+    ),
+
+    radial-gradient(
+      circle at 88% 80%,
+      rgba(
+        217,
+        178,
+        76,
+        0.05
+      ),
+      transparent 30%
+    ),
+
+    linear-gradient(
+      135deg,
+      #0c0c0c,
+      #171411 48%,
+      #0d0d0d
+    );
+
+  background-size:
+    160% 160%;
+
+  animation:
+    luxuryBackground
+    20s
+    ease-in-out
+    infinite;
+}
+
+.beauty-page * {
+  box-sizing: border-box;
 }
 
 
 /* =========================================
-   HEADING
+   LUXURY BACKGROUND ANIMATION
 ========================================= */
 
-.beauty-heading {
+@keyframes luxuryBackground {
+
+  0% {
+    background-position:
+      0% 0%;
+  }
+
+  50% {
+    background-position:
+      100% 100%;
+  }
+
+  100% {
+    background-position:
+      0% 0%;
+  }
+
+}
+
+
+/* =========================================
+   BACKGROUND DECORATION
+========================================= */
+
+.beauty-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: -230px;
+  left: -180px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(
+        217,
+        178,
+        76,
+        0.13
+      ),
+      transparent 70%
+    );
+
+  filter: blur(8px);
+
+  pointer-events: none;
+
+  animation:
+    beautyGlowOne
+    8s
+    ease-in-out
+    infinite;
+}
+
+
+.beauty-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  right: -260px;
+  bottom: -280px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(
+        217,
+        178,
+        76,
+        0.10
+      ),
+      transparent 70%
+    );
+
+  filter: blur(8px);
+
+  pointer-events: none;
+
+  animation:
+    beautyGlowTwo
+    9s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes beautyGlowOne {
+
+  0%,
+  100% {
+    transform:
+      translate(
+        0,
+        0
+      );
+  }
+
+  50% {
+    transform:
+      translate(
+        25px,
+        20px
+      );
+  }
+
+}
+
+
+@keyframes beautyGlowTwo {
+
+  0%,
+  100% {
+    transform:
+      translate(
+        0,
+        0
+      );
+  }
+
+  50% {
+    transform:
+      translate(
+        -25px,
+        -20px
+      );
+  }
+
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.beauty-header {
+  position: relative;
+
+  z-index: 2;
+
   display: flex;
 
   align-items: center;
 
   justify-content: center;
 
-  gap: 14px;
+  gap: 16px;
 
   margin-bottom: 8px;
 }
 
-.beauty-heading h1 {
+
+.beauty-header h1 {
   margin: 0;
 
   color: #d9b24c;
 
-  font-size: 25px;
+  font-size: 26px;
 
   font-weight: 600;
 
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 
   white-space: nowrap;
+
+  text-align: center;
+
+  text-shadow:
+    0 0 20px
+    rgba(
+      217,
+      178,
+      76,
+      0.12
+    );
 }
 
-.beauty-heading span {
-  width: 55px;
+
+.beauty-title-line {
+  width: 70px;
 
   height: 1px;
 
@@ -69,7 +269,8 @@
     );
 }
 
-.beauty-heading span:last-child {
+
+.beauty-title-line-right {
   background:
     linear-gradient(
       90deg,
@@ -84,13 +285,22 @@
 ========================================= */
 
 .beauty-subtitle {
-  margin: 0 0 30px;
+  position: relative;
+
+  z-index: 2;
+
+  margin:
+    0
+    auto
+    35px;
 
   text-align: center;
 
   color: #aaa6b4;
 
   font-size: 14px;
+
+  letter-spacing: 0.5px;
 }
 
 
@@ -99,20 +309,28 @@
 ========================================= */
 
 .beauty-grid {
+  position: relative;
+
+  z-index: 2;
+
   width: 100%;
 
-  max-width: 1450px;
+  max-width: 1500px;
 
   margin: 0 auto;
 
   display: grid;
 
-  /* ⭐ DESKTOP = 5 PER ROW */
-
   grid-template-columns:
-    repeat(5, minmax(0, 1fr));
+    repeat(
+      5,
+      minmax(
+        0,
+        1fr
+      )
+    );
 
-  gap: 20px;
+  gap: 22px;
 }
 
 
@@ -121,42 +339,130 @@
 ========================================= */
 
 .beauty-card {
+  position: relative;
+
   min-width: 0;
 
   overflow: hidden;
 
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.07
+    );
+
+  border-radius: 13px;
+
   background:
     linear-gradient(
       145deg,
-      #18161f,
-      #111016
+      rgba(
+        31,
+        28,
+        34,
+        0.95
+      ),
+      rgba(
+        16,
+        15,
+        20,
+        0.98
+      )
     );
 
-  border:
-    1px solid #2c2932;
-
-  border-radius: 12px;
-
   box-shadow:
-    0 10px 25px
-    rgba(0, 0, 0, 0.28);
+    0
+    12px
+    30px
+    rgba(
+      0,
+      0,
+      0,
+      0.32
+    );
 
   transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+    transform
+    0.35s
+    ease,
+
+    border-color
+    0.35s
+    ease,
+
+    box-shadow
+    0.35s
+    ease;
 }
+
+
+/* subtle gold shine */
+
+.beauty-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -110px;
+  right: -110px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(
+        217,
+        178,
+        76,
+        0.12
+      ),
+      transparent 70%
+    );
+
+  pointer-events: none;
+
+  transition:
+    transform
+    0.5s
+    ease;
+}
+
 
 .beauty-card:hover {
   transform:
-    translateY(-5px);
+    translateY(-7px);
 
   border-color:
-    rgba(217, 178, 76, 0.5);
+    rgba(
+      217,
+      178,
+      76,
+      0.42
+    );
 
   box-shadow:
-    0 18px 35px
-    rgba(0, 0, 0, 0.4);
+    0
+    20px
+    45px
+    rgba(
+      0,
+      0,
+      0,
+      0.45
+    );
+}
+
+
+.beauty-card:hover::before {
+  transform:
+    scale(1.6);
 }
 
 
@@ -165,20 +471,44 @@
 ========================================= */
 
 .beauty-image {
-  width: 100%;
+  position: relative;
 
-  /* ⭐ DESKTOP IMAGE */
+  width: 100%;
 
   aspect-ratio: 1 / 1;
 
   overflow: hidden;
 
-  background: #15131a;
+  background:
+    #15131a;
 }
+
+
+.beauty-image::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 70%,
+      rgba(
+        0,
+        0,
+        0,
+        0.22
+      )
+    );
+
+  pointer-events: none;
+}
+
 
 .beauty-image img {
   width: 100%;
-
   height: 100%;
 
   display: block;
@@ -186,13 +516,16 @@
   object-fit: cover;
 
   transition:
-    transform 0.4s ease;
+    transform
+    0.5s
+    ease;
 }
+
 
 .beauty-card:hover
 .beauty-image img {
   transform:
-    scale(1.05);
+    scale(1.06);
 }
 
 
@@ -201,7 +534,14 @@
 ========================================= */
 
 .beauty-details {
-  padding: 14px;
+  position: relative;
+
+  z-index: 2;
+
+  padding:
+    14px
+    14px
+    15px;
 }
 
 
@@ -210,13 +550,18 @@
 ========================================= */
 
 .beauty-details h2 {
-  margin: 0 0 6px;
+  margin:
+    0
+    0
+    5px;
 
   color: #ffffff;
 
   font-size: 16px;
 
   font-weight: 600;
+
+  line-height: 1.3;
 
   white-space: nowrap;
 
@@ -236,11 +581,19 @@
   color: #aaa6b4;
 
   font-size: 12px;
+
+  line-height: 1.3;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
 
 /* =========================================
-   BOTTOM
+   PRICE + BOOK
 ========================================= */
 
 .beauty-bottom {
@@ -255,10 +608,6 @@
   margin-top: 13px;
 }
 
-
-/* =========================================
-   PRICE
-========================================= */
 
 .beauty-price {
   color: #f6d365;
@@ -276,20 +625,31 @@
 ========================================= */
 
 .book-btn {
-  border: none;
+  flex-shrink: 0;
 
-  padding: 7px 13px;
+  border:
+    1px solid
+    rgba(
+      217,
+      178,
+      76,
+      0.35
+    );
+
+  padding:
+    7px
+    14px;
 
   border-radius: 20px;
+
+  color: #17130c;
 
   background:
     linear-gradient(
       135deg,
       #d9b24c,
-      #f0ca68
+      #f6d365
     );
-
-  color: #15120d;
 
   font-size: 12px;
 
@@ -297,46 +657,68 @@
 
   cursor: pointer;
 
-  white-space: nowrap;
-
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform
+    0.25s
+    ease,
+
+    box-shadow
+    0.25s
+    ease;
 }
+
 
 .book-btn:hover {
   transform:
     translateY(-2px);
 
   box-shadow:
-    0 7px 15px
-    rgba(217, 178, 76, 0.2);
+    0
+    8px
+    20px
+    rgba(
+      217,
+      178,
+      76,
+      0.25
+    );
+}
+
+
+.book-btn:active {
+  transform:
+    scale(0.96);
 }
 
 
 /* =========================================
-   SHIMMER
+   SHIMMER LOADING
 ========================================= */
 
-.shimmer-card {
+.beauty-shimmer-card {
   pointer-events: none;
 }
 
-.shimmer-image,
-.shimmer-title,
-.shimmer-category,
-.shimmer-price {
+
+.beauty-shimmer-image,
+.beauty-shimmer-title,
+.beauty-shimmer-category,
+.beauty-shimmer-price,
+.beauty-shimmer-button {
   position: relative;
 
   overflow: hidden;
 
-  background: #211f27;
+  background:
+    #211f27;
 }
 
-.shimmer-image::after,
-.shimmer-title::after,
-.shimmer-category::after,
-.shimmer-price::after {
+
+.beauty-shimmer-image::after,
+.beauty-shimmer-title::after,
+.beauty-shimmer-category::after,
+.beauty-shimmer-price::after,
+.beauty-shimmer-button::after {
   content: "";
 
   position: absolute;
@@ -353,53 +735,85 @@
     linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.06),
+      rgba(
+        255,
+        255,
+        255,
+        0.06
+      ),
       transparent
     );
 
   animation:
-    shimmer 1.4s infinite;
+    beautyShimmer
+    1.4s
+    infinite;
 }
 
-.shimmer-image {
+
+.beauty-shimmer-image {
   width: 100%;
 
   aspect-ratio: 1 / 1;
 }
 
-.shimmer-details {
+
+.beauty-shimmer-card
+.beauty-details {
   padding: 14px;
 }
 
-.shimmer-title {
-  width: 65%;
+
+.beauty-shimmer-title {
+  width: 70%;
 
   height: 16px;
 
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 
   border-radius: 4px;
 }
 
-.shimmer-category {
-  width: 35%;
 
-  height: 12px;
+.beauty-shimmer-category {
+  width: 40%;
+
+  height: 11px;
 
   border-radius: 4px;
 }
 
-.shimmer-price {
-  width: 30%;
+
+.beauty-shimmer-bottom {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 15px;
+}
+
+
+.beauty-shimmer-price {
+  width: 28%;
 
   height: 15px;
 
-  margin-top: 17px;
-
   border-radius: 4px;
 }
 
-@keyframes shimmer {
+
+.beauty-shimmer-button {
+  width: 55px;
+
+  height: 28px;
+
+  border-radius: 20px;
+}
+
+
+@keyframes beautyShimmer {
 
   100% {
     left: 100%;
@@ -427,15 +841,36 @@
 
   padding: 20px;
 
-  box-sizing: border-box;
-
   background:
-    rgba(0, 0, 0, 0.72);
+    rgba(
+      0,
+      0,
+      0,
+      0.78
+    );
 
   backdrop-filter:
-    blur(5px);
+    blur(8px);
 
   overflow-y: auto;
+
+  animation:
+    overlayAppear
+    0.25s
+    ease;
+}
+
+
+@keyframes overlayAppear {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
 }
 
 
@@ -448,7 +883,7 @@
 
   width: 100%;
 
-  max-width: 460px;
+  max-width: 470px;
 
   max-height: 90vh;
 
@@ -456,24 +891,60 @@
 
   padding: 30px;
 
-  box-sizing: border-box;
-
-  border-radius: 15px;
-
   border:
     1px solid
-    rgba(217, 178, 76, 0.3);
+    rgba(
+      217,
+      178,
+      76,
+      0.30
+    );
+
+  border-radius: 17px;
 
   background:
     linear-gradient(
       145deg,
-      #191720,
-      #111016
+      #1b1922,
+      #100f15
     );
 
   box-shadow:
-    0 25px 70px
-    rgba(0, 0, 0, 0.6);
+    0
+    30px
+    80px
+    rgba(
+      0,
+      0,
+      0,
+      0.65
+    );
+
+  animation:
+    modalAppear
+    0.3s
+    ease;
+}
+
+
+@keyframes modalAppear {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(25px)
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
 }
 
 
@@ -486,30 +957,49 @@
 
   top: 10px;
 
-  right: 13px;
+  right: 12px;
 
-  width: 32px;
+  width: 34px;
 
-  height: 32px;
+  height: 34px;
 
   border: none;
 
   border-radius: 50%;
 
-  background: transparent;
-
   color: #aaa6b4;
+
+  background: transparent;
 
   font-size: 27px;
 
+  line-height: 1;
+
   cursor: pointer;
+
+  transition:
+    color
+    0.2s
+    ease,
+
+    background
+    0.2s
+    ease;
 }
+
 
 .booking-close:hover {
-  color: #ffffff;
+  color: #fff;
 
-  background: #292631;
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.07
+    );
 }
+
 
 .booking-close:disabled {
   opacity: 0.5;
@@ -534,6 +1024,7 @@
   margin-bottom: 20px;
 }
 
+
 .booking-heading h2 {
   margin: 0;
 
@@ -541,15 +1032,19 @@
 
   font-size: 21px;
 
+  font-weight: 600;
+
   white-space: nowrap;
 }
 
+
 .booking-heading span {
-  width: 25px;
+  width: 28px;
 
   height: 1px;
 
-  background: #d9b24c;
+  background:
+    #d9b24c;
 }
 
 
@@ -558,50 +1053,72 @@
 ========================================= */
 
 .selected-service {
-  margin-bottom: 20px;
+  margin-bottom: 21px;
 
-  padding: 14px;
+  padding: 15px;
 
   text-align: center;
 
-  border-radius: 9px;
-
-  background: #211f27;
-
   border:
-    1px solid #302c35;
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.07
+    );
+
+  border-radius: 10px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.035
+    );
 }
+
 
 .selected-service h3 {
-  margin: 0 0 5px;
+  margin:
+    0
+    0
+    5px;
 
-  color: #ffffff;
+  color: #fff;
 
-  font-size: 16px;
+  font-size: 17px;
 }
 
+
 .selected-service p {
-  margin: 0 0 6px;
+  margin:
+    0
+    0
+    7px;
 
   color: #aaa6b4;
 
   font-size: 12px;
 }
 
+
 .selected-service strong {
   color: #f6d365;
 
-  font-size: 15px;
+  font-size: 16px;
 }
 
 
 /* =========================================
-   BOOKING GROUP
+   FORM
 ========================================= */
 
 .booking-group {
   margin-bottom: 15px;
 }
+
 
 .booking-group label {
   display: block;
@@ -611,91 +1128,129 @@
   color: #ddd8e2;
 
   font-size: 13px;
+
+  font-weight: 500;
 }
+
 
 .booking-group input {
   width: 100%;
 
-  height: 44px;
+  height: 45px;
 
-  padding: 0 12px;
-
-  box-sizing: border-box;
+  padding:
+    0
+    13px;
 
   border:
-    1px solid #45413b;
+    1px solid
+    #403c45;
 
-  border-radius: 8px;
+  border-radius: 9px;
 
   outline: none;
 
-  background: #222027;
+  color: #fff;
 
-  color: #ffffff;
+  background:
+    #211f27;
 
   font-size: 13px;
 
   color-scheme: dark;
+
+  transition:
+    border-color
+    0.2s
+    ease,
+
+    box-shadow
+    0.2s
+    ease;
 }
+
 
 .booking-group input::placeholder {
   color: #77727f;
 }
 
+
 .booking-group input:focus {
-  border-color: #d9b24c;
+  border-color:
+    #d9b24c;
 
   box-shadow:
-    0 0 0 3px
-    rgba(217, 178, 76, 0.1);
+    0
+    0
+    0
+    3px
+    rgba(
+      217,
+      178,
+      76,
+      0.10
+    );
 }
 
 
 /* =========================================
-   ERROR
+   ERROR / SUCCESS
 ========================================= */
+
+.booking-message {
+  margin-bottom: 14px;
+
+  padding:
+    10px
+    12px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+}
+
 
 .booking-error {
-  margin-bottom: 14px;
-
-  padding: 9px 11px;
-
-  border-radius: 7px;
-
-  background:
-    rgba(255, 107, 107, 0.08);
+  color: #ff7777;
 
   border:
     1px solid
-    rgba(255, 107, 107, 0.25);
+    rgba(
+      255,
+      107,
+      107,
+      0.25
+    );
 
-  color: #ff7777;
-
-  font-size: 12px;
+  background:
+    rgba(
+      255,
+      107,
+      107,
+      0.08
+    );
 }
 
 
-/* =========================================
-   SUCCESS
-========================================= */
-
 .booking-success {
-  margin-bottom: 14px;
-
-  padding: 9px 11px;
-
-  border-radius: 7px;
-
-  background:
-    rgba(107, 220, 139, 0.08);
+  color: #6bdc8b;
 
   border:
     1px solid
-    rgba(107, 220, 139, 0.25);
+    rgba(
+      107,
+      220,
+      139,
+      0.25
+    );
 
-  color: #6bdc8b;
-
-  font-size: 12px;
+  background:
+    rgba(
+      107,
+      220,
+      139,
+      0.08
+    );
 }
 
 
@@ -706,20 +1261,20 @@
 .booking-submit {
   width: 100%;
 
-  height: 45px;
+  height: 46px;
 
   border: none;
 
   border-radius: 25px;
 
+  color: #15120d;
+
   background:
     linear-gradient(
       135deg,
       #d9b24c,
-      #f0ca68
+      #f6d365
     );
-
-  color: #15120d;
 
   font-size: 13px;
 
@@ -728,19 +1283,42 @@
   cursor: pointer;
 
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    opacity 0.2s ease;
+    transform
+    0.25s
+    ease,
+
+    box-shadow
+    0.25s
+    ease,
+
+    opacity
+    0.2s
+    ease;
 }
+
 
 .booking-submit:hover:not(:disabled) {
   transform:
     translateY(-2px);
 
   box-shadow:
-    0 10px 25px
-    rgba(217, 178, 76, 0.2);
+    0
+    10px
+    25px
+    rgba(
+      217,
+      178,
+      76,
+      0.22
+    );
 }
+
+
+.booking-submit:active:not(:disabled) {
+  transform:
+    scale(0.98);
+}
+
 
 .booking-submit:disabled {
   opacity: 0.6;
@@ -758,7 +1336,13 @@
 
   .beauty-grid {
     grid-template-columns:
-      repeat(4, minmax(0, 1fr));
+      repeat(
+        4,
+        minmax(
+          0,
+          1fr
+        )
+      );
 
     gap: 18px;
   }
@@ -774,40 +1358,45 @@
 @media (max-width: 900px) {
 
   .beauty-page {
-    padding: 35px 20px 55px;
+    padding:
+      35px
+      20px
+      55px;
   }
-
 
   .beauty-grid {
     grid-template-columns:
-      repeat(3, minmax(0, 1fr));
+      repeat(
+        3,
+        minmax(
+          0,
+          1fr
+        )
+      );
 
-    gap: 17px;
+    gap: 16px;
   }
-
-
-  .beauty-image {
-    aspect-ratio: 1 / 1;
-  }
-
 
   .beauty-details {
-    padding: 13px;
+    padding: 12px;
   }
-
 
   .beauty-details h2 {
     font-size: 15px;
   }
 
+  .beauty-category {
+    font-size: 11px;
+  }
 
   .beauty-price {
     font-size: 14px;
   }
 
-
   .book-btn {
-    padding: 7px 11px;
+    padding:
+      7px
+      11px;
 
     font-size: 11px;
   }
@@ -817,83 +1406,63 @@
 
 /* =========================================
    MOBILE
-   ⭐ 2 CARDS PER ROW
+   2 CARDS
 ========================================= */
 
 @media (max-width: 600px) {
 
   .beauty-page {
-    padding: 28px 10px 45px;
+    padding:
+      28px
+      10px
+      45px;
   }
 
-
-  /* HEADING */
-
-  .beauty-heading {
+  .beauty-header {
     gap: 8px;
   }
 
-
-  .beauty-heading h1 {
+  .beauty-header h1 {
     font-size: 19px;
 
-    letter-spacing: 1.2px;
+    letter-spacing: 1.5px;
   }
 
-
-  .beauty-heading span {
-    width: 25px;
+  .beauty-title-line {
+    width: 28px;
   }
-
 
   .beauty-subtitle {
-    margin-bottom: 22px;
+    margin-bottom: 23px;
 
     font-size: 12px;
   }
 
-
-  /* ⭐ 2 COLUMNS */
-
   .beauty-grid {
     grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
 
     gap: 12px;
-
-    width: 100%;
   }
-
-
-  /* CARD */
 
   .beauty-card {
-    border-radius: 9px;
+    border-radius: 10px;
   }
 
-
-  /* IMAGE */
-
   .beauty-image {
-    width: 100%;
-
-    /*
-      Makes image proportional
-      to card width
-    */
-
     aspect-ratio: 1 / 1;
   }
 
-
-  /* DETAILS */
-
   .beauty-details {
-    padding: 10px;
+    padding:
+      10px;
   }
-
-
-  /* NAME */
 
   .beauty-details h2 {
     margin-bottom: 4px;
@@ -901,48 +1470,26 @@
     font-size: 14px;
   }
 
-
-  /* CATEGORY */
-
   .beauty-category {
-    font-size: 11px;
+    font-size: 10px;
   }
 
-
-  /* BOTTOM */
-
   .beauty-bottom {
-    margin-top: 10px;
+    margin-top: 9px;
 
     gap: 5px;
   }
-
-
-  /* PRICE */
 
   .beauty-price {
     font-size: 13px;
   }
 
-
-  /* BUTTON */
-
   .book-btn {
-    padding: 6px 10px;
+    padding:
+      6px
+      10px;
 
     font-size: 10px;
-  }
-
-
-  /* SHIMMER */
-
-  .shimmer-image {
-    aspect-ratio: 1 / 1;
-  }
-
-
-  .shimmer-details {
-    padding: 10px;
   }
 
 
@@ -951,24 +1498,30 @@
   .booking-overlay {
     align-items: flex-start;
 
-    padding: 15px 10px;
+    padding:
+      15px
+      10px;
   }
-
 
   .booking-modal {
     max-height:
-      calc(100vh - 30px);
+      calc(
+        100vh - 30px
+      );
 
-    padding: 25px 18px;
+    padding:
+      25px
+      18px;
 
-    border-radius: 12px;
+    border-radius: 13px;
   }
 
 }
 
 
 /* =========================================
-   SMALL MOBILE
+   SMALL PHONES
+   380px
 ========================================= */
 
 @media (max-width: 380px) {
@@ -979,54 +1532,62 @@
     padding-right: 8px;
   }
 
-
   .beauty-grid {
     gap: 9px;
   }
-
 
   .beauty-details {
     padding: 8px;
   }
 
-
   .beauty-details h2 {
     font-size: 13px;
   }
 
-
   .beauty-category {
-    font-size: 10px;
+    font-size: 9.5px;
   }
-
 
   .beauty-price {
     font-size: 12px;
   }
 
-
   .book-btn {
-    padding: 5px 8px;
+    padding:
+      5px
+      8px;
 
     font-size: 9px;
   }
-
 
   .beauty-bottom {
     margin-top: 8px;
   }
 
+  .beauty-header h1 {
+    font-size: 17px;
+  }
+
+  .beauty-title-line {
+    width: 21px;
+  }
+
+  .beauty-subtitle {
+    font-size: 11px;
+  }
 
   .booking-modal {
     padding:
-      23px 15px;
+      23px
+      15px;
   }
 
 }
 
 
 /* =========================================
-   EXTRA SMALL PHONE
+   EXTRA SMALL
+   320px
 ========================================= */
 
 @media (max-width: 320px) {
@@ -1035,21 +1596,65 @@
     gap: 7px;
   }
 
-
   .beauty-details {
     padding: 7px;
   }
-
 
   .beauty-details h2 {
     font-size: 12px;
   }
 
+  .beauty-category {
+    font-size: 9px;
+  }
+
+  .beauty-price {
+    font-size: 11px;
+  }
 
   .book-btn {
-    padding: 5px 7px;
+    padding:
+      5px
+      7px;
 
-    font-size: 9px;
+    font-size: 8.5px;
+  }
+
+  .beauty-header {
+    gap: 5px;
+  }
+
+  .beauty-header h1 {
+    font-size: 16px;
+
+    letter-spacing: 1px;
+  }
+
+  .beauty-title-line {
+    width: 17px;
+  }
+
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .beauty-page,
+  .beauty-page *,
+  .beauty-page *::before,
+  .beauty-page *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
   }
 
 }
