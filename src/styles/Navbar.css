@@ -23,6 +23,7 @@
 
 .navbar {
   width: 100%;
+
   background:
     radial-gradient(
       circle at 12% 50%,
@@ -37,13 +38,12 @@
 
   position: sticky;
   top: 0;
-
   z-index: 1000;
 }
 
 
 /* =========================================
-   NAVBAR CONTAINER
+   CONTAINER
 ========================================= */
 
 .navbar-container {
@@ -52,11 +52,14 @@
   height: var(--navbar-height);
 
   margin: 0 auto;
+
   padding: 0 30px;
 
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
+
+  justify-content: space-between;
 }
 
 
@@ -66,23 +69,19 @@
 
 .logo {
   display: flex;
-  align-items: center;
 
-  gap: 10px;
+  align-items: center;
 
   min-width: 270px;
 
-  color: var(--text-light);
   text-decoration: none;
-
-  font-size: 19px;
-  font-weight: 600;
 
   white-space: nowrap;
 }
 
 .logo img {
   width: 140px;
+
   height: auto;
 
   display: block;
@@ -94,11 +93,12 @@
 
 
 /* =========================================
-   NAVIGATION MENU
+   NAV MENU
 ========================================= */
 
 .nav-menu {
   display: flex;
+
   align-items: center;
 
   gap: 27px;
@@ -129,7 +129,6 @@
     transform 0.25s ease;
 }
 
-
 .nav-link:hover {
   color: var(--text-light);
 
@@ -138,7 +137,7 @@
 
 
 /* =========================================
-   GOLD UNDERLINE
+   ACTIVE UNDERLINE
 ========================================= */
 
 .nav-link::after {
@@ -147,30 +146,30 @@
   position: absolute;
 
   left: 0;
+
   bottom: 0;
 
   width: 0;
+
   height: 2px;
 
-  background: linear-gradient(
-    90deg,
-    #d4a63a,
-    var(--gold-light)
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #d4a63a,
+      var(--gold-light)
+    );
 
   border-radius: 5px;
 
-  transition: width 0.25s ease;
+  transition:
+    width 0.25s ease;
 }
-
 
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
 }
-
-
-/* Active link */
 
 .nav-link.active {
   color: var(--text-light);
@@ -178,16 +177,17 @@
 
 
 /* =========================================
-   RIGHT SIDE
+   NAVBAR RIGHT
 ========================================= */
 
-.nav-actions {
+.navbar-right {
   display: flex;
+
   align-items: center;
 
-  gap: 18px;
+  gap: 16px;
 
-  margin-left: 25px;
+  margin-left: 20px;
 }
 
 
@@ -196,27 +196,131 @@
 ========================================= */
 
 .cart {
+  position: relative;
+
+  width: 38px;
+
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
   color: var(--text-muted);
 
   text-decoration: none;
 
-  font-size: 18px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 50%;
 
   transition:
     color 0.25s ease,
-    transform 0.25s ease;
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.cart:hover {
+  color: var(--gold);
+
+  background:
+    rgba(245, 158, 11, 0.08);
+
+  transform: scale(1.05);
+}
+
+.cart.active {
+  color: var(--gold);
 }
 
 
-.cart:hover,
-.cart.active {
-  color: var(--gold);
+/* =========================================
+   CART ICON
+========================================= */
 
-  transform: scale(1.1);
+.cart-icon {
+  font-size: 21px;
+
+  line-height: 1;
+}
+
+
+/* =========================================
+   CART BADGE
+========================================= */
+
+.cart-badge {
+  position: absolute;
+
+  top: -2px;
+
+  right: -3px;
+
+  min-width: 18px;
+
+  height: 18px;
+
+  padding: 0 4px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50px;
+
+  background: #e11d48;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  border: 2px solid #16141e;
+
+  box-shadow:
+    0 2px 6px
+    rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================
+   DESKTOP AUTH
+========================================= */
+
+.desktop-nav-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+/* =========================================
+   USER NAME
+========================================= */
+
+.user-name {
+  color: var(--gold-light);
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  max-width: 120px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
 
@@ -233,13 +337,13 @@
 
   padding: 7px 17px;
 
-  border: 1px solid var(--gold);
+  border:
+    1px solid var(--gold);
 
   border-radius: 20px;
 
   transition: all 0.25s ease;
 }
-
 
 .login:hover {
   color: #111;
@@ -249,18 +353,99 @@
   transform: translateY(-2px);
 
   box-shadow:
-    0 8px 20px rgba(245, 158, 11, 0.2);
+    0 8px 20px
+    rgba(245, 158, 11, 0.2);
 }
 
 
 /* =========================================
-   MOBILE MENU BUTTON
+   REGISTER
+========================================= */
+
+.register {
+  color: #111;
+
+  background: var(--gold);
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  padding: 8px 17px;
+
+  border-radius: 20px;
+
+  transition: all 0.25s ease;
+}
+
+.register:hover {
+  background: var(--gold-light);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(245, 158, 11, 0.2);
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+.logout {
+  border:
+    1px solid
+    rgba(245, 158, 11, 0.8);
+
+  background: transparent;
+
+  color: var(--gold);
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  padding: 7px 15px;
+
+  border-radius: 20px;
+
+  transition: all 0.25s ease;
+
+  white-space: nowrap;
+}
+
+.logout:hover {
+  background: var(--gold);
+
+  color: #111;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(245, 158, 11, 0.2);
+}
+
+
+/* =========================================
+   MOBILE AUTH
+========================================= */
+
+.mobile-nav-actions {
+  display: none;
+}
+
+
+/* =========================================
+   MENU BUTTON
 ========================================= */
 
 .menu-btn {
   display: none;
 
   width: 38px;
+
   height: 38px;
 
   padding: 6px;
@@ -275,12 +460,15 @@
 }
 
 
-/* Hamburger lines */
+/* =========================================
+   HAMBURGER
+========================================= */
 
 .menu-btn span {
   display: block;
 
   width: 22px;
+
   height: 2px;
 
   margin: 5px auto;
@@ -298,17 +486,19 @@
 ========================================= */
 
 .menu-btn.open span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform:
+    translateY(7px)
+    rotate(45deg);
 }
-
 
 .menu-btn.open span:nth-child(2) {
   opacity: 0;
 }
 
-
 .menu-btn.open span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform:
+    translateY(-7px)
+    rotate(-45deg);
 }
 
 
@@ -318,14 +508,31 @@
 
 @media (max-width: 1100px) {
 
+  .navbar-container {
+    padding: 0 22px;
+  }
+
   .logo {
     min-width: 220px;
   }
 
   .nav-menu {
-    gap: 18px;
+    gap: 17px;
   }
 
+  .navbar-right {
+    gap: 10px;
+
+    margin-left: 12px;
+  }
+
+  .desktop-nav-actions {
+    gap: 8px;
+  }
+
+  .user-name {
+    max-width: 90px;
+  }
 }
 
 
@@ -340,47 +547,54 @@
   }
 
 
-  /* Main container */
+  /* =====================================
+     CONTAINER
+  ===================================== */
 
   .navbar-container {
     height: var(--navbar-height);
 
-    padding: 0 20px;
+    padding: 0 18px;
 
-    display: flex;
-    align-items: center;
+    /*
+      Keeps logo on the left and
+      cart/menu on the right with
+      maximum available space between them.
+    */
     justify-content: space-between;
   }
 
 
-  /* Logo */
+  /* =====================================
+     LOGO
+  ===================================== */
 
   .logo {
     min-width: 0;
-  }
 
+    flex: 1;
+
+    /*
+      Extra breathing room between
+      logo and cart/menu.
+    */
+    margin-right: 30px;
+  }
 
   .logo img {
     width: 110px;
-    height: auto;
-  }
-
-
-  /* Hamburger */
-
-  .menu-btn {
-    display: block;
   }
 
 
   /* =====================================
-     MOBILE NAVIGATION
+     NAV MENU
   ===================================== */
 
   .nav-menu {
     position: absolute;
 
     top: var(--navbar-height);
+
     left: 0;
 
     width: 100%;
@@ -395,27 +609,38 @@
 
     margin: 0;
 
-    padding: 12px 25px 20px;
+    padding:
+      12px 22px 20px;
 
-    background: linear-gradient(
-      180deg,
-      #0c0b12,
-      #15121d
-    );
+    box-sizing: border-box;
 
-    border-bottom: 1px solid rgba(212, 166, 58, 0.15);
+    background:
+      linear-gradient(
+        180deg,
+        #0c0b12,
+        #15121d
+      );
+
+    border-bottom:
+      1px solid
+      rgba(212, 166, 58, 0.15);
 
     box-shadow:
-      0 15px 30px rgba(0, 0, 0, 0.35);
+      0 15px 30px
+      rgba(0, 0, 0, 0.35);
   }
 
 
-  /* Open menu */
+  /* =====================================
+     SHOW MENU
+  ===================================== */
 
   .nav-menu.show {
     display: flex;
 
-    animation: menuSlide 0.25s ease;
+    animation:
+      menuSlide
+      0.25s ease;
   }
 
 
@@ -423,19 +648,22 @@
 
     from {
       opacity: 0;
-      transform: translateY(-10px);
+
+      transform:
+        translateY(-10px);
     }
 
     to {
       opacity: 1;
-      transform: translateY(0);
-    }
 
+      transform:
+        translateY(0);
+    }
   }
 
 
   /* =====================================
-     MOBILE LINKS
+     LINKS
   ===================================== */
 
   .nav-link {
@@ -448,21 +676,104 @@
 
 
   /* =====================================
-     MOBILE RIGHT SIDE
+     DESKTOP AUTH HIDDEN
   ===================================== */
 
-  .nav-actions {
+  .desktop-nav-actions {
+    display: none;
+  }
+
+
+  /* =====================================
+     MOBILE AUTH
+  ===================================== */
+
+  .mobile-nav-actions {
     width: 100%;
 
-    margin: 8px 0 0;
+    margin-top: 8px;
 
-    padding-top: 12px;
+    padding-top: 13px;
 
-    border-top: 1px solid #292530;
+    border-top:
+      1px solid #292530;
 
     display: flex;
 
+    align-items: center;
+
     justify-content: flex-start;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+  }
+
+
+  .mobile-nav-actions .user-name {
+    max-width: 180px;
+  }
+
+
+  /* =====================================
+     RIGHT SIDE
+  ===================================== */
+
+  .navbar-right {
+    /*
+      Keeps cart + menu together on
+      the right side.
+    */
+    gap: 8px;
+
+    /*
+      Creates separation from logo.
+    */
+    margin-left: 20px;
+
+    flex-shrink: 0;
+  }
+
+
+  /* =====================================
+     CART ALWAYS VISIBLE
+  ===================================== */
+
+  .cart {
+    width: 40px;
+
+    height: 40px;
+  }
+
+
+  .cart-icon {
+    font-size: 22px;
+  }
+
+
+  /* =====================================
+     CART BADGE
+  ===================================== */
+
+  .cart-badge {
+    top: -1px;
+
+    right: -2px;
+
+    min-width: 18px;
+
+    height: 18px;
+
+    font-size: 10px;
+  }
+
+
+  /* =====================================
+     HAMBURGER
+  ===================================== */
+
+  .menu-btn {
+    display: block;
   }
 
 }
@@ -475,7 +786,12 @@
 @media (max-width: 480px) {
 
   .navbar-container {
-    padding: 0 15px;
+    padding: 0 13px;
+  }
+
+
+  .logo {
+    margin-right: 25px;
   }
 
 
@@ -484,9 +800,87 @@
   }
 
 
+  .navbar-right {
+    gap: 5px;
+
+    margin-left: 15px;
+  }
+
+
+  .cart {
+    width: 38px;
+
+    height: 38px;
+  }
+
+
+  .cart-icon {
+    font-size: 21px;
+  }
+
+
   .menu-btn {
     width: 36px;
+
     height: 36px;
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 360px) {
+
+  .navbar-container {
+    padding: 0 10px;
+  }
+
+
+  .logo {
+    margin-right: 20px;
+  }
+
+
+  .logo img {
+    width: 90px;
+  }
+
+
+  .navbar-right {
+    gap: 2px;
+
+    margin-left: 12px;
+  }
+
+
+  .cart {
+    width: 35px;
+
+    height: 35px;
+  }
+
+
+  .cart-icon {
+    font-size: 19px;
+  }
+
+
+  .cart-badge {
+    min-width: 16px;
+
+    height: 16px;
+
+    font-size: 9px;
+  }
+
+
+  .menu-btn {
+    width: 34px;
+
+    height: 34px;
   }
 
 }

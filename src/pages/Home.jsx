@@ -1,7 +1,13 @@
 import React from "react";
 import '../styles/Home.css'
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+
+  const navi = useNavigate();
+  function handleClick(){
+    navi('/sarees')
+  }
   return (
     <main className="home" id="home">
       {/* Background decorative effects */}
@@ -27,7 +33,9 @@ const Home = () => {
         </p>
 
         <div className="home-buttons">
-          <button className="primary-btn">
+          <button className="primary-btn" onClick={()=>{
+            handleClick()
+          }}>
             Explore Collection
           </button>
 

@@ -6,8 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import About from './pages/About'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
 import ErrorPage from './pages/ErrorPage'
 import Layout from './Layout'
 import Sarees from './pages/Sarees';
@@ -15,6 +13,8 @@ import Jewellery from './pages/Jewellery';
 import Beauty from './pages/Beauty';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 const myRoutes = createBrowserRouter([
   {
@@ -48,6 +48,14 @@ const myRoutes = createBrowserRouter([
         element:<Beauty/>
       },
       {
+        path:'/login',
+        element:<Login/>
+      },
+      {
+        path:'/register',
+        element:<Register/>
+      },
+      {
         path:'/cart',
         element:<Cart/>
       }
@@ -57,6 +65,6 @@ const myRoutes = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={myRoutes}/>
+      <RouterProvider router={myRoutes}/>
   </StrictMode>,
 )

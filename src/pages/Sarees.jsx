@@ -1,84 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, {
+    useEffect,
+    useMemo,
+    useState
+} from "react";
+
+import {
+    useNavigate
+} from "react-router-dom";
+
 import "../styles/Sarees.css";
+
+
+const BASE_URL =
+    "https://sjb-backend-01lg.onrender.com";
+
 
 const Sarees = () => {
 
-    // All sarees from backend
-    const [sarees, setSarees] = useState([]);
-
-    // Initial random 8 sarees
-    const [featuredSarees, setFeaturedSarees] = useState([]);
-
-    // Selected category
-    const [selectedCategory, setSelectedCategory] = useState(null);
-
-    // Loading
-    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
 
-    // =========================================
-    // FETCH ALL SAREES
-    // =========================================
+    // =========================================================
+    // STATE
+    // =========================================================
 
-    async function getSarees() {
+    const [sarees, setSarees] =
+        useState([]);
 
-        try {
+    const [selectedCategory, setSelectedCategory] =
+        useState("All");
 
-            setLoading(true);
+    const [loading, setLoading] =
+        useState(true);
 
-            const response = await fetch(
-                "https://sjb-backend-01lg.onrender.com/api/sarees"
-            );
+    const [addingId, setAddingId] =
+        useState(null);
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch sarees");
-            }
-
-            const data = await response.json();
-
-            // Store all sarees
-            setSarees(data);
+    const [error, setError] =
+        useState("");
 
 
-            // ---------------------------------
-            // RANDOM 8 FOR INITIAL DISPLAY
-            // ---------------------------------
-
-            const shuffledSarees = [...data]
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 8);
-
-            setFeaturedSarees(shuffledSarees);
-
-
-        } catch (error) {
-
-            console.log("Error:", error);
-
-        } finally {
-
-            setLoading(false);
-
-        }
-
-    }
-
-
-    // Run once when page opens
-
-    useEffect(() => {
-
-        getSarees();
-
-    }, []);
-
-
-
-    // =========================================
+    // =========================================================
     // CATEGORIES
-    // =========================================
+    // =========================================================
 
     const categories = [
+
+        {
+            name: "All",
+            display: "All Sarees"
+        },
 
         {
             name: "Cotton Sarees",
@@ -108,81 +79,379 @@ const Sarees = () => {
     ];
 
 
+    // =========================================================
+    // GET ALL SAREES
+    // =========================================================
 
-    // =========================================
-    // DISPLAY PRODUCTS
-    // =========================================
+    const getSarees = async () => {
 
-    const displayedSarees =
+        try {
 
-        selectedCategory === null
+            setLoading(true);
 
-            // Initial random 8
-            ? featuredSarees
+            setError("");
 
-            // Category products
-            : sarees.filter(
 
-                (eachSaree) =>
+            const response =
+                await fetch(
+                    `${BASE_URL}/api/sarees`
+                );
 
-                    eachSaree.category === selectedCategory
 
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to fetch sarees"
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (!Array.isArray(data)) {
+
+                throw new Error(
+                    "Invalid saree data received"
+                );
+
+            }
+
+
+            setSarees(data);
+
+        } catch (error) {
+
+            console.error(
+                "GET SAREES ERROR:",
+                error
             );
 
 
+            setError(
+                "Unable to load sarees. Please try again."
+            );
 
-    // =========================================
-    // CATEGORY CLICK
-    // =========================================
+        } finally {
 
-    function handleCategory(categoryName) {
+            setLoading(false);
 
-        setSelectedCategory(categoryName);
+        }
 
-    }
+    };
 
 
+    // =========================================================
+    // LOAD DATA
+    // =========================================================
+
+    useEffect(() => {
+
+        getSarees();
+
+    }, []);
+
+
+    // =========================================================
+    // FILTER PRODUCTS
+    // =========================================================
+
+    const displayedSarees =
+        useMemo(() => {
+
+            if (
+                selectedCategory === "All"
+            ) {
+
+                return sarees;
+
+            }
+
+
+            const selected =
+                selectedCategory
+                    .trim()
+                    .toLowerCase();
+
+
+            return sarees.filter(
+                (saree) => {
+
+                    const category =
+                        String(
+                            saree.category || ""
+                        )
+                            .trim()
+                            .toLowerCase();
+
+
+                    return (
+                        category ===
+                        selected
+                    );
+
+                }
+            );
+
+
+        }, [
+            sarees,
+            selectedCategory
+        ]);
+
+
+    // =========================================================
+    // CATEGORY CHANGE
+    // =========================================================
+
+    const handleCategoryChange =
+        (category) => {
+
+            setSelectedCategory(
+                category
+            );
+
+
+            setTimeout(() => {
+
+                const products =
+                    document.querySelector(
+                        ".sarees-products-section"
+                    );
+
+
+                if (products) {
+
+                    products.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+            }, 50);
+
+        };
+
+
+    // =========================================================
+    // ADD TO CART
+    // =========================================================
+
+    const handleAdd =
+        async (saree) => {
+
+
+        // -----------------------------------------------------
+        // SOLD OUT
+        // -----------------------------------------------------
+
+        if (
+            saree.isAvailable === false
+        ) {
+
+            alert(
+                "This saree is currently sold out."
+            );
+
+            return;
+
+        }
+
+
+        // -----------------------------------------------------
+        // TOKEN
+        // -----------------------------------------------------
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+
+        // -----------------------------------------------------
+        // LOGIN
+        // -----------------------------------------------------
+
+        if (!token) {
+
+            alert(
+                "Please login first"
+            );
+
+            navigate("/login");
+
+            return;
+
+        }
+
+
+        try {
+
+            setAddingId(
+                saree._id
+            );
+
+
+            // -------------------------------------------------
+            // ADD TO CART
+            // -------------------------------------------------
+
+            const response =
+                await fetch(
+                    `${BASE_URL}/api/cart`,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                `Bearer ${token}`
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                productId:
+                                    saree._id,
+
+                                productType:
+                                    "saree"
+
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            // -------------------------------------------------
+            // ERROR
+            // -------------------------------------------------
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                alert(
+                    data.message ||
+                    "Unable to add saree to cart"
+                );
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // UPDATE NAVBAR CART
+            // -------------------------------------------------
+
+            window.dispatchEvent(
+                new Event(
+                    "cartUpdated"
+                )
+            );
+
+
+            // -------------------------------------------------
+            // GO TO CART
+            // -------------------------------------------------
+
+            alert('Added')
+
+
+        } catch (error) {
+
+            console.error(
+                "ADD SAREE ERROR:",
+                error
+            );
+
+
+            alert(
+                "Unable to add saree to cart"
+            );
+
+
+        } finally {
+
+            setAddingId(
+                null
+            );
+
+        }
+
+    };
+
+
+    // =========================================================
+    // PAGE
+    // =========================================================
 
     return (
 
         <main className="sarees-page">
 
 
-            {/* =================================
-                SIMPLE PAGE TITLE
-            ================================= */}
+            {/* =================================================
+                BRAND
+            ================================================= */}
 
-            <div className="sarees-brand">
+            <header className="sarees-brand">
 
-                <span className="brand-line"></span>
+                <span
+                    className="brand-line"
+                ></span>
+
 
                 <h1>
                     J COLLECTIONS
                 </h1>
 
-                <span className="brand-line"></span>
 
-            </div>
+                <span
+                    className="brand-line"
+                ></span>
+
+            </header>
 
 
+            {/* =================================================
+                CATEGORY FILTER
+            ================================================= */}
 
-            {/* =================================
-                CATEGORY BUTTONS
-            ================================= */}
+            <nav
+                className="category-section"
+                aria-label="Saree categories"
+            >
 
-            <div className="category-section">
-
-                {
-
-                    categories.map((category) => (
+                {categories.map(
+                    (category) => (
 
                         <button
 
-                            key={category.name}
+                            key={
+                                category.name
+                            }
+
+                            type="button"
 
                             className={
 
-                                selectedCategory === category.name
+                                selectedCategory ===
+                                category.name
 
                                     ? "category-btn active"
 
@@ -190,171 +459,514 @@ const Sarees = () => {
 
                             }
 
+                            aria-pressed={
+                                selectedCategory ===
+                                category.name
+                            }
+
                             onClick={() =>
-                                handleCategory(category.name)
+                                handleCategoryChange(
+                                    category.name
+                                )
                             }
 
                         >
 
-                            {category.display}
+                            {
+                                category.display
+                            }
 
                         </button>
 
-                    ))
+                    )
+                )}
 
-                }
-
-            </div>
-
+            </nav>
 
 
-            {/* =================================
-                SHIMMER LOADING
-            ================================= */}
+            {/* =================================================
+                ERROR
+            ================================================= */}
 
-            {
+            {!loading &&
+                error && (
 
-                loading && (
+                    <div className="saree-error">
 
-                    <div className="sarees-grid">
+                        <div>
 
-                        {
+                            <strong>
+                                Something went wrong
+                            </strong>
 
-                            Array.from({ length: 10 }).map((_, index) => (
+                            <p>
+                                {error}
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            onClick={
+                                getSarees
+                            }
+                        >
+                            Try Again
+                        </button>
+
+                    </div>
+
+                )}
+
+
+            {/* =================================================
+                PRODUCTS
+            ================================================= */}
+
+            <section
+                className="sarees-products-section"
+            >
+
+
+                {/* =================================================
+                    CATEGORY HEADER
+                ================================================= */}
+
+                {!loading &&
+                    !error && (
+
+                        <div
+                            className="
+                                selected-category-info
+                            "
+                        >
+
+                            <div>
+
+                                <span
+                                    className="
+                                        section-eyebrow
+                                    "
+                                >
+                                    J COLLECTIONS
+                                </span>
+
+
+                                <h2>
+
+                                    {
+                                        selectedCategory ===
+                                        "All"
+
+                                            ? "All Sarees"
+
+                                            : selectedCategory
+
+                                    }
+
+                                </h2>
+
+                            </div>
+
+
+
+                        </div>
+
+                    )}
+
+
+                {/* =================================================
+                    LOADING
+                ================================================= */}
+
+                {loading && (
+
+                    <div
+                        className="sarees-grid"
+                    >
+
+                        {Array.from({
+                            length: 10
+                        }).map(
+                            (_, index) => (
 
                                 <div
-                                    className="saree-card skeleton-card"
+                                    className="
+                                        saree-card
+                                        skeleton-card
+                                    "
                                     key={index}
                                 >
 
-                                    <div className="skeleton skeleton-image"></div>
+                                    <div
+                                        className="
+                                            skeleton
+                                            skeleton-image
+                                        "
+                                    ></div>
 
-                                    <div className="skeleton-content">
 
-                                        <div className="skeleton skeleton-title"></div>
+                                    <div
+                                        className="
+                                            skeleton-content
+                                        "
+                                    >
 
-                                        <div className="skeleton skeleton-text"></div>
+                                        <div
+                                            className="
+                                                skeleton
+                                                skeleton-title
+                                            "
+                                        ></div>
 
-                                        <div className="skeleton skeleton-price"></div>
+
+                                        <div
+                                            className="
+                                                skeleton
+                                                skeleton-color
+                                            "
+                                        ></div>
+
+
+                                        <div
+                                            className="
+                                                skeleton
+                                                skeleton-price
+                                            "
+                                        ></div>
 
                                     </div>
 
                                 </div>
 
-                            ))
-
-                        }
+                            )
+                        )}
 
                     </div>
 
-                )
-
-            }
+                )}
 
 
+                {/* =================================================
+                    PRODUCT GRID
+                ================================================= */}
 
-            {/* =================================
-                PRODUCTS
-            ================================= */}
+                {!loading &&
+                    !error && (
 
-            {
+                        <div
+                            className="
+                                sarees-grid
+                            "
+                        >
 
-                !loading && (
+                            {displayedSarees.length > 0 ? (
 
-                    <div className="sarees-grid">
+                                displayedSarees.map(
+                                    (saree) => {
 
-                        {
+                                        const isSoldOut =
+                                            saree.isAvailable ===
+                                            false;
 
-                            displayedSarees.length > 0
 
-                                ?
+                                        const isAdding =
+                                            addingId ===
+                                            saree._id;
 
-                                displayedSarees.map((eachSaree) => (
 
-                                    <article
-                                        className="saree-card"
-                                        key={eachSaree._id}
+                                        return (
+
+                                            <article
+
+                                                key={
+                                                    saree._id
+                                                }
+
+                                                className={
+
+                                                    isSoldOut
+
+                                                        ? "saree-card sold-out-card"
+
+                                                        : "saree-card"
+
+                                                }
+
+                                            >
+
+
+                                                {/* =================================
+                                                    IMAGE
+                                                ================================= */}
+
+                                                <div
+                                                    className="
+                                                        saree-image-box
+                                                    "
+                                                >
+
+                                                    {saree.image ? (
+
+                                                        <img
+
+                                                            src={
+                                                                saree.image
+                                                            }
+
+                                                            alt={
+                                                                saree.name ||
+                                                                "Saree"
+                                                            }
+
+                                                            loading="lazy"
+
+                                                        />
+
+                                                    ) : (
+
+                                                        <div
+                                                            className="
+                                                                no-image
+                                                            "
+                                                        >
+                                                            Image unavailable
+                                                        </div>
+
+                                                    )}
+
+
+                                                    {/* ---------------------------------
+                                                        IMAGE CATEGORY
+                                                    --------------------------------- */}
+
+                                                    <span
+                                                        className="
+                                                            image-category-badge
+                                                        "
+                                                    >
+
+                                                        {
+                                                            saree.category
+                                                        }
+
+                                                    </span>
+
+
+                                                    {/* ---------------------------------
+                                                        SOLD OUT
+                                                    --------------------------------- */}
+
+                                                    {isSoldOut && (
+
+                                                        <div
+                                                            className="
+                                                                sold-out-overlay
+                                                            "
+                                                        >
+
+                                                            SOLD OUT
+
+                                                        </div>
+
+                                                    )}
+
+                                                </div>
+
+
+                                                {/* =================================
+                                                    DETAILS
+                                                ================================= */}
+
+                                                <div
+                                                    className="
+                                                        saree-details
+                                                    "
+                                                >
+
+
+                                                    {/* ---------------------------------
+                                                        NAME
+                                                    --------------------------------- */}
+
+                                                    <h3>
+
+                                                        {
+                                                            saree.name
+                                                        }
+
+                                                    </h3>
+
+
+                                                    {/* ---------------------------------
+                                                        COLOR
+                                                    --------------------------------- */}
+
+                                                    <div
+                                                        className="
+                                                            saree-color
+                                                        "
+                                                    >
+
+                                                        <span>
+                                                            Color
+                                                        </span>
+
+                                                        <strong>
+                                                            {
+                                                                saree.color ||
+                                                                "Classic"
+                                                            }
+                                                        </strong>
+
+                                                    </div>
+
+
+                                                    {/* ---------------------------------
+                                                        PRICE + ADD
+                                                    --------------------------------- */}
+
+                                                    <div
+                                                        className="
+                                                            saree-bottom
+                                                        "
+                                                    >
+
+                                                        <span
+                                                            className="
+                                                                saree-price
+                                                            "
+                                                        >
+
+                                                            ₹{" "}
+
+                                                            {
+                                                                Number(
+                                                                    saree.price ||
+                                                                    0
+                                                                ).toLocaleString(
+                                                                    "en-IN"
+                                                                )
+                                                            }
+
+                                                        </span>
+
+
+                                                        <button
+
+                                                            type="button"
+
+                                                            className={
+
+                                                                isSoldOut
+
+                                                                    ? "saree-add-btn sold-out-add-btn"
+
+                                                                    : "saree-add-btn"
+
+                                                            }
+
+                                                            disabled={
+                                                                isSoldOut ||
+                                                                isAdding
+                                                            }
+
+                                                            aria-label={
+
+                                                                isSoldOut
+
+                                                                    ? `${saree.name} is sold out`
+
+                                                                    : `Add ${saree.name} to cart`
+
+                                                            }
+
+                                                            onClick={() =>
+                                                                handleAdd(
+                                                                    saree
+                                                                )
+                                                            }
+
+                                                        >
+
+                                                            {
+
+                                                                isSoldOut
+
+                                                                    ? "Sold Out"
+
+                                                                    : isAdding
+
+                                                                        ? "Adding..."
+
+                                                                        : "Add"
+
+                                                            }
+
+                                                        </button>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </article>
+
+                                        );
+
+                                    }
+
+                                )
+
+                            ) : (
+
+                                <div
+                                    className="
+                                        no-products
+                                    "
+                                >
+
+                                    <div
+                                        className="
+                                            no-products-icon
+                                        "
                                     >
+                                        ✦
+                                    </div>
 
 
-                                        {/* IMAGE */}
-
-                                        <div className="saree-image-box">
-
-                                            <img
-                                                src={eachSaree.image}
-                                                alt={eachSaree.name}
-                                                loading="lazy"
-                                            />
-
-                                        </div>
+                                    <h3>
+                                        No Sarees Found
+                                    </h3>
 
 
-
-                                        {/* PRODUCT DETAILS */}
-
-                                        <div className="saree-details">
-
-
-                                            <h3>
-
-                                                {eachSaree.name}
-
-                                            </h3>
+                                    <p>
+                                        There are currently
+                                        no sarees available
+                                        in this category.
+                                    </p>
 
 
-                                            <p>
-
-                                                {eachSaree.color}
-
-                                            </p>
-
-
-                                            <div className="saree-bottom">
-
-
-                                                <span>
-
-                                                    ₹ {eachSaree.price}
-
-                                                </span>
-
-
-                                                <button>
-
-                                                    Add
-
-                                                </button>
-
-
-                                            </div>
-
-
-                                        </div>
-
-
-                                    </article>
-
-                                ))
-
-                                :
-
-                                <div className="no-products">
-
-                                    <h2>
-                                        No Products Available
-                                    </h2>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setSelectedCategory(
+                                                "All"
+                                            )
+                                        }
+                                    >
+                                        View All Sarees
+                                    </button>
 
                                 </div>
 
-                        }
+                            )}
 
-                    </div>
+                        </div>
 
-                )
+                    )}
 
-            }
-
+            </section>
 
         </main>
 

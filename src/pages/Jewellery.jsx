@@ -1,86 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, {
+    useEffect,
+    useMemo,
+    useState
+} from "react";
+
+import {
+    useNavigate
+} from "react-router-dom";
+
 import "../styles/Jewellery.css";
+
+
+const BASE_URL =
+    "https://sjb-backend-01lg.onrender.com";
+
 
 const Jewellery = () => {
 
-    // Store ALL jewellery from backend
-    const [jewellery, setJewellery] = useState([]);
-
-    // Store random 8 jewellery products initially
-    const [featuredJewellery, setFeaturedJewellery] = useState([]);
-
-    // Selected category
-    const [selectedCategory, setSelectedCategory] = useState(null);
-
-    // Loading state
-    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
 
-    // =========================================
-    // FETCH ALL JEWELLERY
-    // =========================================
+    // =========================================================
+    // STATE
+    // =========================================================
 
-    async function getJewellery() {
+    const [jewellery, setJewellery] =
+        useState([]);
 
-        try {
+    const [selectedCategory, setSelectedCategory] =
+        useState("All");
 
-            setLoading(true);
+    const [loading, setLoading] =
+        useState(true);
 
-            const response = await fetch(
-                "https://sjb-backend-01lg.onrender.com/api/jewellery"
-            );
+    const [addingId, setAddingId] =
+        useState(null);
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch jewellery");
-            }
-
-            const data = await response.json();
-
-            console.log("All Jewellery:", data);
-
-            // Store all jewellery
-            setJewellery(data);
+    const [error, setError] =
+        useState("");
 
 
-            // =========================================
-            // RANDOM 8 PRODUCTS FOR INITIAL DISPLAY
-            // =========================================
-
-            const shuffledJewellery = [...data]
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 8);
-
-            setFeaturedJewellery(shuffledJewellery);
-
-
-        } catch (error) {
-
-            console.log("Jewellery Error:", error);
-
-        } finally {
-
-            setLoading(false);
-
-        }
-
-    }
-
-
-    // Fetch when page opens
-
-    useEffect(() => {
-
-        getJewellery();
-
-    }, []);
-
-
-
-    // =========================================
-    // JEWELLERY CATEGORIES
-    // =========================================
+    // =========================================================
+    // CATEGORIES
+    // =========================================================
 
     const categories = [
+
+        {
+            name: "All",
+            display: "All Jewellery"
+        },
 
         {
             name: "Necklace",
@@ -104,7 +73,7 @@ const Jewellery = () => {
 
         {
             name: "Ring",
-            display: "Rings"
+            display: "Ring"
         },
 
         {
@@ -115,249 +84,869 @@ const Jewellery = () => {
     ];
 
 
+    // =========================================================
+    // GET JEWELLERY
+    // =========================================================
 
-    // =========================================
-    // FRONTEND FILTERING
-    // =========================================
+    const getJewellery = async () => {
 
-    const displayedJewellery =
+        try {
 
-        selectedCategory === null
+            setLoading(true);
 
-            // Initially show random 8
-            ? featuredJewellery
+            setError("");
 
-            // Filter based on selected category
-            : jewellery.filter(
 
-                (eachJewellery) =>
+            const response =
+                await fetch(
+                    `${BASE_URL}/api/jewellery`
+                );
 
-                    eachJewellery.category === selectedCategory
 
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to fetch jewellery"
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (!Array.isArray(data)) {
+
+                throw new Error(
+                    "Invalid jewellery data"
+                );
+
+            }
+
+
+            setJewellery(data);
+
+        } catch (error) {
+
+            console.error(
+                "GET JEWELLERY ERROR:",
+                error
             );
 
 
+            setError(
+                "Unable to load jewellery. Please try again."
+            );
 
-    // =========================================
-    // CATEGORY CLICK
-    // =========================================
+        } finally {
 
-    function handleCategory(categoryName) {
+            setLoading(false);
 
-        setSelectedCategory(categoryName);
+        }
 
-    }
+    };
 
 
+    // =========================================================
+    // LOAD JEWELLERY
+    // =========================================================
+
+    useEffect(() => {
+
+        getJewellery();
+
+    }, []);
+
+
+    // =========================================================
+    // FILTER JEWELLERY
+    // =========================================================
+
+    const displayedJewellery =
+        useMemo(() => {
+
+            if (
+                selectedCategory === "All"
+            ) {
+
+                return jewellery;
+
+            }
+
+
+            const selected =
+                selectedCategory
+                    .trim()
+                    .toLowerCase();
+
+
+            return jewellery.filter(
+                (item) => {
+
+                    const category =
+                        String(
+                            item.category || ""
+                        )
+                            .trim()
+                            .toLowerCase();
+
+
+                    return (
+                        category ===
+                        selected
+                    );
+
+                }
+            );
+
+
+        }, [
+            jewellery,
+            selectedCategory
+        ]);
+
+
+    // =========================================================
+    // CATEGORY CHANGE
+    // =========================================================
+
+    const handleCategoryChange =
+        (category) => {
+
+            setSelectedCategory(
+                category
+            );
+
+
+            setTimeout(() => {
+
+                const products =
+                    document.querySelector(
+                        ".jewellery-products-section"
+                    );
+
+
+                if (products) {
+
+                    products.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+            }, 50);
+
+        };
+
+
+    // =========================================================
+    // ADD TO CART
+    // =========================================================
+
+    const handleAdd =
+        async (item) => {
+
+
+        // -----------------------------------------------------
+        // SOLD OUT CHECK
+        // -----------------------------------------------------
+
+        if (
+            item.isAvailable === false
+        ) {
+
+            alert(
+                "This jewellery is currently sold out."
+            );
+
+            return;
+
+        }
+
+
+        // -----------------------------------------------------
+        // GET TOKEN
+        // -----------------------------------------------------
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+
+        // -----------------------------------------------------
+        // LOGIN CHECK
+        // -----------------------------------------------------
+
+        if (!token) {
+
+            alert(
+                "Please login first"
+            );
+
+            navigate("/login");
+
+            return;
+
+        }
+
+
+        try {
+
+            setAddingId(
+                item._id
+            );
+
+
+            // -------------------------------------------------
+            // ADD TO CART
+            // -------------------------------------------------
+
+            const response =
+                await fetch(
+                    `${BASE_URL}/api/cart`,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                `Bearer ${token}`
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                productId:
+                                    item._id,
+
+                                productType:
+                                    "jewellery"
+
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            // -------------------------------------------------
+            // ERROR
+            // -------------------------------------------------
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                alert(
+                    data.message ||
+                    "Unable to add jewellery to cart"
+                );
+
+                return;
+
+            }
+
+
+            // -------------------------------------------------
+            // UPDATE NAVBAR CART COUNT
+            // -------------------------------------------------
+
+            window.dispatchEvent(
+                new Event(
+                    "cartUpdated"
+                )
+            );
+
+
+            // -------------------------------------------------
+            // GO TO CART
+            // -------------------------------------------------
+
+            alert('Added')
+
+
+        } catch (error) {
+
+            console.error(
+                "ADD JEWELLERY ERROR:",
+                error
+            );
+
+
+            alert(
+                "Unable to add jewellery to cart"
+            );
+
+
+        } finally {
+
+            setAddingId(
+                null
+            );
+
+        }
+
+    };
+
+
+    // =========================================================
+    // PAGE
+    // =========================================================
 
     return (
 
         <main className="jewellery-page">
 
 
-            {/* =================================
-                J COLLECTIONS
-            ================================= */}
+            {/* =================================================
+                BRAND
+            ================================================= */}
 
-            <div className="jewellery-brand">
+            <header className="jewellery-brand">
 
-                <span className="brand-line"></span>
+                <span
+                    className="brand-line"
+                ></span>
+
 
                 <h1>
                     J COLLECTIONS
                 </h1>
 
-                <span className="brand-line"></span>
 
-            </div>
+                <span
+                    className="brand-line"
+                ></span>
+
+            </header>
 
 
+            {/* =================================================
+                CATEGORY FILTER
+            ================================================= */}
 
-            {/* =================================
-                CATEGORY BUTTONS
-            ================================= */}
+            <nav
+                className="category-section"
+                aria-label="Jewellery categories"
+            >
 
-            <div className="jewellery-category-section">
-
-                {
-
-                    categories.map((category) => (
+                {categories.map(
+                    (category) => (
 
                         <button
 
-                            key={category.name}
+                            key={
+                                category.name
+                            }
+
+                            type="button"
 
                             className={
 
-                                selectedCategory === category.name
+                                selectedCategory ===
+                                category.name
 
-                                    ? "jewellery-category-btn active"
+                                    ? "category-btn active"
 
-                                    : "jewellery-category-btn"
+                                    : "category-btn"
 
                             }
 
+                            aria-pressed={
+                                selectedCategory ===
+                                category.name
+                            }
+
                             onClick={() =>
-                                handleCategory(category.name)
+                                handleCategoryChange(
+                                    category.name
+                                )
                             }
 
                         >
 
-                            {category.display}
+                            {
+                                category.display
+                            }
 
                         </button>
 
-                    ))
+                    )
+                )}
 
-                }
-
-            </div>
-
+            </nav>
 
 
-            {/* =================================
-                SHIMMER LOADING
-            ================================= */}
+            {/* =================================================
+                ERROR
+            ================================================= */}
 
-            {
+            {!loading &&
+                error && (
 
-                loading && (
+                    <div
+                        className="
+                            jewellery-error
+                        "
+                    >
 
-                    <div className="jewellery-grid">
+                        <div>
 
-                        {
+                            <strong>
+                                Something went wrong
+                            </strong>
 
-                            Array.from({ length: 10 }).map((_, index) => (
+                            <p>
+                                {error}
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            onClick={
+                                getJewellery
+                            }
+                        >
+                            Try Again
+                        </button>
+
+                    </div>
+
+                )}
+
+
+            {/* =================================================
+                PRODUCTS SECTION
+            ================================================= */}
+
+            <section
+                className="
+                    jewellery-products-section
+                "
+            >
+
+
+                {/* =================================================
+                    CATEGORY TITLE
+                    NO COUNT
+                ================================================= */}
+
+                {!loading &&
+                    !error && (
+
+                        <div
+                            className="
+                                selected-category-info
+                            "
+                        >
+
+                            <div>
+
+                                <span
+                                    className="
+                                        section-eyebrow
+                                    "
+                                >
+                                    J COLLECTIONS
+                                </span>
+
+
+                                <h2>
+
+                                    {
+                                        selectedCategory ===
+                                        "All"
+
+                                            ? "All Jewellery"
+
+                                            : selectedCategory
+
+                                    }
+
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+                    )}
+
+
+                {/* =================================================
+                    LOADING SKELETON
+                ================================================= */}
+
+                {loading && (
+
+                    <div
+                        className="
+                            jewellery-grid
+                        "
+                    >
+
+                        {Array.from({
+                            length: 10
+                        }).map(
+                            (_, index) => (
 
                                 <div
-                                    className="jewellery-card skeleton-card"
+                                    className="
+                                        jewellery-card
+                                        skeleton-card
+                                    "
                                     key={index}
                                 >
 
-                                    <div className="skeleton jewellery-skeleton-image"></div>
+                                    <div
+                                        className="
+                                            skeleton
+                                            skeleton-image
+                                        "
+                                    ></div>
 
-                                    <div className="jewellery-skeleton-content">
 
-                                        <div className="skeleton skeleton-title"></div>
+                                    <div
+                                        className="
+                                            skeleton-content
+                                        "
+                                    >
 
-                                        <div className="skeleton skeleton-text"></div>
+                                        <div
+                                            className="
+                                                skeleton
+                                                skeleton-title
+                                            "
+                                        ></div>
 
-                                        <div className="skeleton skeleton-price"></div>
+
+                                        <div
+                                            className="
+                                                skeleton
+                                                skeleton-price
+                                            "
+                                        ></div>
 
                                     </div>
 
                                 </div>
 
-                            ))
-
-                        }
+                            )
+                        )}
 
                     </div>
 
-                )
-
-            }
+                )}
 
 
+                {/* =================================================
+                    PRODUCTS
+                ================================================= */}
 
-            {/* =================================
-                JEWELLERY PRODUCTS
-            ================================= */}
+                {!loading &&
+                    !error && (
 
-            {
+                        <div
+                            className="
+                                jewellery-grid
+                            "
+                        >
 
-                !loading && (
+                            {displayedJewellery.length > 0 ? (
 
-                    <div className="jewellery-grid">
+                                displayedJewellery.map(
+                                    (item) => {
 
-                        {
+                                        const isSoldOut =
+                                            item.isAvailable ===
+                                            false;
 
-                            displayedJewellery.length > 0
 
-                                ?
+                                        const isAdding =
+                                            addingId ===
+                                            item._id;
 
-                                displayedJewellery.map((eachJewellery) => (
 
-                                    <article
-                                        className="jewellery-card"
-                                        key={eachJewellery._id}
+                                        return (
+
+                                            <article
+
+                                                key={
+                                                    item._id
+                                                }
+
+                                                className={
+
+                                                    isSoldOut
+
+                                                        ? "jewellery-card sold-out-card"
+
+                                                        : "jewellery-card"
+
+                                                }
+
+                                            >
+
+
+                                                {/* =================================
+                                                    IMAGE
+                                                ================================= */}
+
+                                                <div
+                                                    className="
+                                                        jewellery-image-box
+                                                    "
+                                                >
+
+                                                    {item.image ? (
+
+                                                        <img
+
+                                                            src={
+                                                                item.image
+                                                            }
+
+                                                            alt={
+                                                                item.name ||
+                                                                "Jewellery"
+                                                            }
+
+                                                            loading="lazy"
+
+                                                        />
+
+                                                    ) : (
+
+                                                        <div
+                                                            className="
+                                                                no-image
+                                                            "
+                                                        >
+                                                            Image unavailable
+                                                        </div>
+
+                                                    )}
+
+
+                                                    {/* ---------------------------------
+                                                        CATEGORY ON IMAGE
+                                                    --------------------------------- */}
+
+                                                    <span
+                                                        className="
+                                                            image-category-badge
+                                                        "
+                                                    >
+
+                                                        {
+                                                            item.category
+                                                        }
+
+                                                    </span>
+
+
+                                                    {/* ---------------------------------
+                                                        SOLD OUT
+                                                    --------------------------------- */}
+
+                                                    {isSoldOut && (
+
+                                                        <div
+                                                            className="
+                                                                sold-out-overlay
+                                                            "
+                                                        >
+
+                                                            SOLD OUT
+
+                                                        </div>
+
+                                                    )}
+
+                                                </div>
+
+
+                                                {/* =================================
+                                                    DETAILS
+                                                ================================= */}
+
+                                                <div
+                                                    className="
+                                                        jewellery-details
+                                                    "
+                                                >
+
+
+                                                    {/* ---------------------------------
+                                                        NAME
+                                                    --------------------------------- */}
+
+                                                    <h3>
+
+                                                        {
+                                                            item.name
+                                                        }
+
+                                                    </h3>
+
+
+                                                    {/* ---------------------------------
+                                                        PRICE + ADD
+                                                    --------------------------------- */}
+
+                                                    <div
+                                                        className="
+                                                            jewellery-bottom
+                                                        "
+                                                    >
+
+                                                        <span
+                                                            className="
+                                                                jewellery-price
+                                                            "
+                                                        >
+
+                                                            ₹{" "}
+
+                                                            {
+                                                                Number(
+                                                                    item.price ||
+                                                                    0
+                                                                ).toLocaleString(
+                                                                    "en-IN"
+                                                                )
+                                                            }
+
+                                                        </span>
+
+
+                                                        <button
+
+                                                            type="button"
+
+                                                            className={
+
+                                                                isSoldOut
+
+                                                                    ? "sold-out-add-btn"
+
+                                                                    : ""
+
+                                                            }
+
+                                                            disabled={
+                                                                isSoldOut ||
+                                                                isAdding
+                                                            }
+
+                                                            aria-label={
+
+                                                                isSoldOut
+
+                                                                    ? `${item.name} is sold out`
+
+                                                                    : `Add ${item.name} to cart`
+
+                                                            }
+
+                                                            onClick={() =>
+                                                                handleAdd(
+                                                                    item
+                                                                )
+                                                            }
+
+                                                        >
+
+                                                            {
+
+                                                                isSoldOut
+
+                                                                    ? "Sold Out"
+
+                                                                    : isAdding
+
+                                                                        ? "Adding..."
+
+                                                                        : "Add"
+
+                                                            }
+
+                                                        </button>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </article>
+
+                                        );
+
+                                    }
+
+                                )
+
+                            ) : (
+
+                                <div
+                                    className="
+                                        no-products
+                                    "
+                                >
+
+                                    <div
+                                        className="
+                                            no-products-icon
+                                        "
                                     >
+                                        ✦
+                                    </div>
 
 
-                                        {/* IMAGE */}
+                                    <h3>
+                                        No Jewellery Found
+                                    </h3>
 
-                                        <div className="jewellery-image-box">
-
-                                            <img
-                                                src={eachJewellery.image}
-                                                alt={eachJewellery.name}
-                                                loading="lazy"
-                                            />
-
-                                        </div>
-
-
-
-                                        {/* DETAILS */}
-
-                                        <div className="jewellery-details">
-
-
-                                            <h3>
-                                                {eachJewellery.name}
-                                            </h3>
-
-
-                                            <p className="jewellery-type">
-                                                {eachJewellery.category}
-                                            </p>
-
-
-                                            <div className="jewellery-bottom">
-
-
-                                                <span>
-                                                    ₹ {eachJewellery.price}
-                                                </span>
-
-
-                                                <button>
-                                                    Add
-                                                </button>
-
-
-                                            </div>
-
-
-                                        </div>
-
-
-                                    </article>
-
-                                ))
-
-                                :
-
-                                <div className="no-jewellery">
-
-                                    <h2>
-                                        No Products Available
-                                    </h2>
 
                                     <p>
-                                        Products will be added soon.
+                                        There are currently
+                                        no jewellery items
+                                        available in this category.
                                     </p>
+
+
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setSelectedCategory(
+                                                "All"
+                                            )
+                                        }
+                                    >
+                                        View All Jewellery
+                                    </button>
 
                                 </div>
 
-                        }
+                            )}
 
-                    </div>
+                        </div>
 
-                )
+                    )}
 
-            }
-
+            </section>
 
         </main>
 
